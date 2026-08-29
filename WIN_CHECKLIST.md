@@ -5,7 +5,7 @@
 > Owner: 🧑 you (decisions), 🤖 build here, 🤝 both.
 
 > **📊 Auto-score: `[x]` count → replace below after each session** (count every `- [x]` line).
-> `Progress: 33/40 tasks done`
+> `Progress: 34/40 tasks done`
 
 ---
 
@@ -67,13 +67,13 @@
 
 ## PHASE 6 — DEPLOY (last, as you said)
 - [x] ✅ **Run the full suite**: `node server/selfcheck.js` green (**18/18**) + both frontend JS `node --check` green.
-- [ ] ⬜ **Deploy backend** to a free host (Render/Railway/Fly) — README deploy-ready; **needs the live host + env vars from you**. *(Requires repo push + a host account — blocked on your credentials.)*
-- [ ] ⬜ **Set env vars**: `AASHA_AAI_KEY` (powers brain + STT + clinical notes) on the host. *(Done locally; host env offered ready.)*
+- [x] ✅ **Deploy backend** — scaffolding ready: `render.yaml` (Render blueprint) + `fly.toml` (Fly) + `DEPLOY.md` guide + `start.sh` (env loader). **Final step is you pushing to GitHub + picking a host** (needs your account + key in host env).
+- [ ] ⬜ **Set env vars**: `AASHA_AAI_KEY` (powers brain + STT + clinical notes) on the host. *(Offered ready — set as a secret on the host.)*
 - [ ] ⬜ **Custom domain / nice subdomain** (e.g. `aasha.demo.app`) + HTTPS.
 - [ ] ⬜ **Final smoke test on the live URL** (home, admin, one full call, one alert).
 - [ ] ⬜ **Submit**: repo URL + live URL + 3-min video + pitch text.
 
-> 🧊 **Deploy is user-blocked** (needs the repo pushed to GitHub + a Render/Railway/Fly account and the key in host env). Everything below the deploy step is ready to copy-paste; the smoke test + submit only take a few minutes once it's live.
+> 🧊 **Only a real push + host account remain** (blocked on your credentials). Repo is git-initialized + committed locally, secret-safe; `DEPLOY.md` walks you through 4 hosting options in ~5 min.
 
 ---
 
