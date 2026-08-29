@@ -1,0 +1,22 @@
+# Render Blueprint for AASHA — deploy via Render's "New > Blueprint" UI,
+# or point Render at this repo and it'll read this file.
+#
+# Zero-dependency Node app: no build step, no npm install needed.
+# Render injects PORT automatically and injects the env vars below.
+services:
+  - type: web
+    name: aasha
+    runtime: node
+    plan: free
+    buildCommand: ""          # no build; we have zero deps
+    startCommand: node server/index.js
+    healthCheckPath: /health
+    envVars:
+      - key: NODE_ENV
+        value: production
+      - key: BASE_URL
+        value: https://aasha.onrender.com   # set to your live URL after deploy
+      # ⚠️ The ONE key that powers the brain + STT + clinical notes + analytics.
+      # Set this safely in the Render dashboard (not in this file):
+      - key: AASHA_AAI_KEY
+        sync: false           # prompts you to enter it at deploy time, stored as a secret

@@ -1,0 +1,13 @@
+# ⚠️ Secrets — NEVER commit these. Keep keys in .env only.
+.env
+.env.local
+.env.*.local
+
+# Runtime data + logs (regenerated each run)
+data/
+*.log
+npm-debug.log*
+
+# OS / editor junk
+.DS_Store
+Thumbs.db

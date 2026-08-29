@@ -1,0 +1,27 @@
+# Fly.io config for AASHA — zero-dependency Node, no build.
+# 1) fly launch --no-deploy
+# 2) fly secrets set AASHA_AAI_KEY=...
+# 3) fly deploy
+
+app = "aasha"
+primary_region = "bom"            # Mumbai — near our users; change to taste
+
+[build]
+
+[env]
+  PORT = "8080"
+  NODE_ENV = "production"
+  # set BASE_URL after first deploy (e.g. https://aasha.fly.dev)
+
+[http_service]
+  internal_port = 8080
+  force_https = true
+  auto_stop_machines = "stop"
+  auto_start_machines = true
+  min_machines_running = 0
+  processes = ["app"]
+
+[[vm]]
+  memory = "256mb"
+  cpu_kind = "shared"
+  cpus = 1
