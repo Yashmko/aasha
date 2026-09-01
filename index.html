@@ -342,17 +342,16 @@ footer b{color:var(--text);font-weight:600}
 <header class="hero" id="top">
   <div class="wrap grid">
     <div>
-      <span class="eyebrow">AI voice companion for ageing parents</span>
+      <span class="eyebrow">A phone call, every day, for your parents</span>
       <h1 id="heroTitle">AASHA</h1>
-      <p class="sub"><strong>आशा</strong> means hope. An agentic, multilingual voice companion that <strong>calls your parents every day</strong> — checks their mood &amp; medicine, catches health red flags, and alerts the family.</p>
+      <p class="sub"><strong>आशा</strong> (aa-sha) means <strong>hope</strong>. It's a voice call that checks on your ageing parents each day — in their own language. It asks how they are, gently reminds them of their medicine, and texts you if something seems off. That's the whole thing. No app to install, no tech skills needed at their end.</p>
       <div class="actions">
-        <a href="#product" class="btn dark">Try the live demo →</a>
-        <a href="#how" class="btn ghost">See how it works</a>
+        <a href="#product" class="btn dark">Try it — it's live</a>
+        <a href="#how" class="btn ghost">How it works</a>
       </div>
       <div class="langs">
-        <b style="color:var(--text)">आशा</b> = hope
-        <span class="pill-lang en">EN</span><span class="pill-lang">हिन्दी</span><span class="pill-lang">ਪੰਜਾਬੀ</span>
-        · zero-install
+        <span class="pill-lang en">English</span><span class="pill-lang">हिन्दी</span><span class="pill-lang">ਪੰਜਾਬੀ</span>
+        <span style="margin-left:6px">· it just answers in whatever language you speak</span>
       </div>
       <div class="cfg" id="cfgPills">
         <span class="cfg-pill idle" data-k="backend">backend …</span>
@@ -362,10 +361,21 @@ footer b{color:var(--text);font-weight:600}
     </div>
 
     <div class="visual">
-      <img class="hero-img" src="assets/hero.jpg" alt="A serene elderly woman talking to AASHA on the phone, bathed in soft sage and cream light" />
-      <div class="glass g1"><div class="k">mood today</div><div class="v ok">7 / 10 · well</div></div>
-      <div class="glass g2"><div class="k">family alert</div><div class="v rose">⚠ notified Rohan</div></div>
-      <div class="glass g3"><div class="k">doctor note</div><div class="v">drafted ✓</div></div>
+      <div class="console hero-console">
+        <div class="cbar"><span class="d d1"></span><span class="d d2"></span><span class="d d3"></span><span class="t">aasha --call "aunty kamla" · session #184</span></div>
+        <pre class="clog"><span class="cmd">$ aasha --call</span> "aunty kamla, 72"
+
+<span class="dim">aasha&gt;</span> Namaste, I am Aasha. How are you feeling today,
+         and did you take your evening medicine?
+<span class="dim">aunty&gt;</span> Theek hoon, bas haath thoda kaanp rahe hain...
+<span class="dim">aasha&gt;</span> No problem at all. Did you take your BP tablet?
+
+<span class="ok">→ mood 6/10</span>    <span class="dim">· partially well</span>
+<span class="wa">→ meds partial</span> <span class="dim">· missed evening BP tablet</span>
+<span class="rs">→ family alert</span> <span class="dim">· messaged Rohan +91 98****</span>
+<span class="ok">→ doctor note</span> <span class="dim">· drafted ✓</span></pre>
+        <div class="cfoot"><span>real-time STT on AssemblyAI</span><span class="ok">● live</span></div>
+      </div>
     </div>
   </div>
 </header>
@@ -374,14 +384,14 @@ footer b{color:var(--text);font-weight:600}
 <section id="problem">
   <div class="wrap">
     <div class="sec-head reveal">
-      <span class="eyebrow">The need</span>
-      <h2>Millions of parents live alone. <em>Nobody checks.</em></h2>
-      <p>A missed dose at home, a fall at 3am, a loneliness that never gets said — and a family 5,000 km away who can't be there every day.</p>
+      <span class="eyebrow">The problem</span>
+      <h2>My parents can't call me every day. <em>And I can't call them enough.</em></h2>
+      <p>This one's personal. My mum checks on her mother once a day by phone. Some days she's fine, some days she forgets her BP tablet and doesn't mention it. I built AASHA so that single daily call always happens — and so we actually hear what's going on.</p>
     </div>
     <div class="prob-grid">
-      <div class="care reveal"><div class="n">i.</div><div class="t">A daily pill goes missed</div><p>BP, thyroid, insulin — one forgotten dose can spiral before anyone notices.</p></div>
-      <div class="care reveal" data-d="1"><div class="n">ii.</div><div class="t">A fall happens at 3am</div><p>No one knows for hours. The window to act is quietly missed.</p></div>
-      <div class="care reveal" data-d="2"><div class="n">iii.</div><div class="t">Loneliness, unspoken</div><p>Depression and decline begin in silence — long before the first visible sign.</p></div>
+      <div class="care reveal"><div class="n">i.</div><div class="t">A pill gets missed</div><p>BP, thyroid, insulin. One forgotten dose, quietly skipped, and nobody hears about it until it's a problem.</p></div>
+      <div class="care reveal" data-d="1"><div class="n">ii.</div><div class="t">A fall at 3am</div><p>No one knows for hours. By morning the window to act is gone.</p></div>
+      <div class="care reveal" data-d="2"><div class="n">iii.</div><div class="t">The lonely ones</div><p>The grandparents who say "I'm fine" to everything. Decline starts in what they don't say.</p></div>
     </div>
   </div>
 </section>
@@ -390,7 +400,7 @@ footer b{color:var(--text);font-weight:600}
 <section id="product" class="product-wrap" style="border-top:none">
   <div class="wrap">
     <div class="product-panel">
-      <div class="sec-head reveal"><span class="eyebrow">Live product</span><h2>Talk to AASHA. <em>Right now.</em></h2><p>Tap the orb, allow the mic, and just speak. AASHA listens, thinks with empathy, and replies aloud — in the language you speak.</p></div>
+      <div class="sec-head reveal"><span class="eyebrow">Live — it actually works</span><h2>Talk to AASHA. <em>Right now.</em></h2><p>Tap the orb, allow the mic, and just speak. This is the real thing, not a mock — it transcribes what you say, replies aloud, and updates the care dashboard as you talk. Or click <b>🎬 Auto-demo</b> if you don't want to use a mic.</p></div>
 
       <div class="stage">
         <div class="pane reveal">
@@ -450,7 +460,7 @@ footer b{color:var(--text);font-weight:600}
 <!-- HOW -->
 <section id="how">
   <div class="wrap">
-    <div class="sec-head reveal"><span class="eyebrow">How it works</span><h2>Not a chatbot. <em>A caregiver workflow.</em></h2></div>
+    <div class="sec-head reveal"><span class="eyebrow">How it works</span><h2>It's a daily call, <em>not a chatbot.</em></h2><p>Six small things happen on every call. That's the whole product — done well.</p></div>
     <div class="how-grid">
       <div class="step reveal"><div class="n">i</div><h4>Greet &amp; listen</h4><p>Phones, talks warmly, picks up mood, sleep, appetite and pain — in the caller's own language.</p><div class="stack"><span>STT</span><span>auto-lang</span></div></div>
       <div class="step reveal" data-d="1"><div class="n">ii</div><h4>Verify medicine</h4><p>Checks today's doses against a remembered schedule, gently reminds if one was missed.</p><div class="stack"><span>memory</span><span>agents</span></div></div>
@@ -478,10 +488,10 @@ footer b{color:var(--text);font-weight:600}
 <section class="cta">
   <div class="wrap">
     <span class="eyebrow">आशा = hope</span>
-    <h2 class="reveal" id="ctaTitle">Let AASHA<br>call them.</h2>
-    <p class="reveal" data-d="1">If a single check-in call, in any language, keeps your parents safe — that's the win.</p>
+    <h2 class="reveal" id="ctaTitle">One call a day<br>could save a life.</h2>
+    <p class="reveal" data-d="1">AASHA makes sure the daily check-in happens, in their language, and tells you if something's off. That's the whole idea.</p>
     <div class="actions reveal" data-d="2">
-      <a href="#product" class="btn dark">Try the live demo</a>
+      <a href="#product" class="btn dark">Try it — it's live</a>
       <a href="#top" class="btn ghost">Back to top ↑</a>
     </div>
   </div>
@@ -489,8 +499,8 @@ footer b{color:var(--text);font-weight:600}
 
 <footer>
   <div class="wrap in">
-    <div>© 2026 AASHA · आशा</div>
-    <div>Built with <b>AssemblyAI</b> · real-time STT · LLM Gateway · analytics</div>
+    <div>© 2026 AASHA · आशा · made for the AssemblyAI Voice Agent Hackathon</div>
+    <div>Speaking &amp; notes on <b>AssemblyAI</b> (streaming STT + LLM Gateway + analytics)</div>
     <div><a href="#top">Back to top ↑</a></div>
   </div>
 </footer>
