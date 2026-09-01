@@ -48,7 +48,7 @@ body[data-theme="dark"]{
   --ok:#7ce3a1; --warn:#ffd166; --risk:#ff7b94;
 }
 body[data-theme="dark"] nav{background:rgba(14,16,22,.9)}
-body[data-theme="dark"] .orb-b{opacity:.4;mix-blend-mode:screen}
+body[data-theme="dark"] .orb-b{opacity:.32;mix-blend-mode:screen}
 body[data-theme="dark"] .prob:hover{background:rgba(20,23,31,.6)}
 body[data-theme="dark"] .stat,body[data-theme="dark"] .step,body[data-theme="dark"] .term,
 body[data-theme="dark"] .console,body[data-theme="dark"] .dash,body[data-theme="dark"] .mem-item,
@@ -65,15 +65,22 @@ a{color:var(--accent);text-decoration:none}
 a:hover{text-decoration:underline}
 
 /* ---------- 🎈 floating decorative orbs (MetalForge vibe) ---------- */
-/* Self-contained colorful glow-blobs that gently float in background. */
+/* Self-contained colorful glow-blobs that gently float in background.
+   Animated on transform ONLY (via translate3d) and composited on the GPU,
+   with blur/opacity held constant — so the glow never flickers or stalls. */
 .scene{position:fixed;inset:0;z-index:0;pointer-events:none;overflow:hidden}
-.orb-b{position:absolute;border-radius:50%;filter:blur(46px);opacity:.55;mix-blend-mode:multiply;animation:float 14s ease-in-out infinite}
+.orb-b{position:absolute;border-radius:50%;filter:blur(32px);opacity:.5;mix-blend-mode:multiply;
+  transform:translate3d(0,0,0);will-change:transform;backface-visibility:hidden;
+  animation:float 18s linear infinite}
 .orb-b.p1{width:280px;height:280px;background:var(--accent);top:-6%;left:-6%}
-.orb-b.p2{width:220px;height:220px;background:var(--sky);top:30%;right:-8%;animation-delay:-4s}
-.orb-b.p3{width:320px;height:320px;background:var(--mint);bottom:-10%;left:10%;animation-delay:-8s}
-.orb-b.p4{width:180px;height:180px;background:var(--violet);top:60%;left:-5%;animation-delay:-2s}
-.orb-b.p5{width:240px;height:240px;background:var(--lemon);bottom:20%;right:20%;animation-delay:-6s;opacity:.35}
-@keyframes float{0%,100%{transform:translate(0,0) scale(1)}33%{transform:translate(30px,-28px) scale(1.06)}66%{transform:translate(-22px,18px) scale(.96)}}
+.orb-b.p2{width:220px;height:220px;background:var(--sky);top:30%;right:-8%;animation-duration:22s;animation-delay:-5s}
+.orb-b.p3{width:320px;height:320px;background:var(--mint);bottom:-10%;left:10%;animation-duration:26s;animation-delay:-9s}
+.orb-b.p4{width:180px;height:180px;background:var(--violet);top:60%;left:-5%;animation-duration:20s;animation-delay:-3s}
+.orb-b.p5{width:240px;height:240px;background:var(--lemon);bottom:20%;right:20%;animation-duration:24s;animation-delay:-11s;opacity:.3}
+/* gentle, constant-speed drift — translate only, no scale, so the blur/glow stays steady */
+@keyframes float{0%{transform:translate3d(0,0,0)}25%{transform:translate3d(26px,-22px,0)}
+  50%{transform:translate3d(-10px,14px,0)}75%{transform:translate3d(-24px,-12px,0)}
+  100%{transform:translate3d(0,0,0)}}
 
 /* content sits above scene */
 header,nav,section,footer,.marquee{position:relative;z-index:2}
