@@ -1,497 +1,650 @@
 <!DOCTYPE html>
-<html lang="en">
+<html lang="en" data-theme="">
 <head>
-<meta charset="UTF-8" />
-<meta name="viewport" content="width=device-width, initial-scale=1.0" />
-<title>AASHA — आशा · AI Voice Companion</title>
-<meta name="description" content="AASHA is an agentic, multilingual AI voice companion that calls, checks on and looks after ageing parents — with family alerts and doctor-ready notes." />
-<link rel="icon" type="image/svg+xml" href="assets/favicon.svg" />
-<meta property="og:type" content="website" />
-<meta property="og:title" content="AASHA — आशा · AI Voice Companion for Ageing Parents" />
-<meta property="og:description" content="An agentic, multilingual AI voice companion that calls your parents every day — checks mood & medicine, catches health red flags, alerts the family, and writes doctor-ready notes." />
-<meta property="og:image" content="assets/hero.jpg" />
-<meta name="twitter:card" content="summary_large_image" />
-<meta name="twitter:title" content="AASHA — आशा · AI Voice Companion for Ageing Parents" />
-<meta name="twitter:description" content="Care that calls your parents — in their own language." />
-<meta name="twitter:image" content="assets/hero.jpg" />
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>AASHA — आशा — a voice check-in for the people who raised us</title>
+<meta name="description" content="AASHA is a voice companion that calls your ageing parents every day in their own language, gently checks their medicine, and texts you if something seems off.">
+<meta property="og:title" content="AASHA — आशा — a daily voice check-in for your parents">
+<meta property="og:description" content="A voice call that checks on your ageing parents each day, in their own language, and texts you when something seems off. That's the whole thing.">
+<meta property="og:type" content="website">
+<meta property="og:image" content="assets/hero.jpg">
+<meta name="twitter:card" content="summary_large_image">
+<meta name="twitter:title" content="AASHA — आशा — a daily voice check-in for your parents">
+<meta name="twitter:description" content="A voice call that checks on your ageing parents each day, in their own language, and texts you when something seems off.">
+<meta name="twitter:image" content="assets/hero.jpg">
+<link rel="icon" type="image/svg+xml" href="assets/favicon.svg">
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=DM+Serif+Display:ital@0;1&family=Space+Grotesk:wght@300;400;500;600;700&family=JetBrains+Mono:ital,wght@0,400;0,500;0,700;1,400&display=swap" rel="stylesheet">
 <style>
-/* ============================================================
-   AASHA — "Amelie" design system.
-   Soft sage · warm cream · refined serif display · frosted glass
-   · pill buttons · calm motion. Edit the tokens below to reskin.
-   ============================================================ */
+/* ══════════════════════ AASHA · editorial design system ══════════════════════
+   Palette + type tokens (light values here; dark values flip on [data-theme=dark]) */
 :root{
-  /* palette — soft sage & cream (Amelie) */
-  --bg:#f6f3ea;            /* warm cream page */
-  --bg-2:#eef1e6;          /* sage-tinted panel */
-  --panel:#fdfcf7;         /* near-white card */
-  --panel-2:#f0efe6;
-  --line:#e5dfd0;          /* hairline */
-  --line-2:#d2cabc;
-  /* text */
-  --text:#2b3426;          /* deep forest */
-  --muted:#707866;
-  --dim:#a4ab99;
-  /* accent — sage green (primary) */
-  --accent:#5b8a5b;
-  --accent-2:#7aa577;
-  --accent-soft:#e9efe0;
-  /* cute support */
-  --rose:#d58e83;          /* soft rose (alerts / warmth) */
-  --rose-soft:#f6e7e1;
-  --mint:#cfe0c8;
-  --sky:#d7e4ea;
-  /* status */
-  --ok:#4a8a55; --warn:#bd8b3b; --risk:#c96a5f;
-  /* typography */
-  --serif:"Playfair Display",Georgia,"Times New Roman",serif;
-  --sans:ui-sans-serif,system-ui,-apple-system,"Segoe UI",Roboto,Helvetica,Arial,sans-serif;
-  --mono:ui-monospace,"SF Mono",SFMono-Regular,Menlo,Consolas,"Liberation Mono",monospace;
-  --radius:26px;
-  --shadow:0 30px 70px -44px rgba(31,53,27,.28);
+  --c-cream:#fff9f1; --c-sand:#eee8d2; --c-ink:#0d0c0a; --c-gold:#ffda3f; --c-coral:#fc9073;
+  --c-night:#0a0a12; --c-navy:#121a30; --c-card:#fffcff; --c-line:#e6dcc4;
+
+  --bg: var(--c-cream);
+  --ink: var(--c-ink);
+  --card: var(--c-card);
+  --raised: var(--c-sand);
+  --line: var(--c-line);
+  --gold: var(--c-gold);
+  --coral: var(--c-coral);
+  --muted: rgba(13,12,10,.62);
+  --dim: rgba(13,12,10,.40);
+  --serif:"DM Serif Display",Georgia,"Times New Roman",serif;
+  --sans:"Space Grotesk",-apple-system,"Segoe UI",Roboto,Helvetica,Arial,sans-serif;
+  --mono:"JetBrains Mono",ui-monospace,"SF Mono",Menlo,Consolas,monospace;
+  --ok:#3f8a4e; --warn:#c08a2e; --risk:#c9573f;
+  --sky:#8ab6ea; --sky-2:#517fb0;
   --ease:cubic-bezier(.22,1,.36,1);
 }
-/* 🌙 dark theme — flipped via <body data-theme="dark"> */
-body[data-theme="dark"]{
-  --bg:#151a14; --bg-2:#1b2118; --panel:#1d231b; --panel-2:#252c22;
-  --line:#2f382c; --line-2:#3c4538;
-  --text:#eef1e6; --muted:#b0b8a6; --dim:#6f776a;
-  --accent:#8fbe8f; --accent-2:#a5cf9f; --accent-soft:#22301f;
-  --rose:#dca89e; --rose-soft:#2e2420;
-  --mint:#385038; --sky:#33444d;
-  --ok:#86c492; --warn:#e0b366; --risk:#ef8a7d;
+body[data-theme=dark]{
+  --bg: var(--c-night); --ink:#fdfaf4; --card:#141c31; --raised:#18223c;
+  --line:#283453; --muted:rgba(253,250,244,.66); --dim:rgba(253,250,244,.42);
+  --ok:#8fd29a; --warn:#e7c06e; --risk:#f0937c; --sky:#9dc4ef; --sky-2:#6f9cd0;
 }
-*{box-sizing:border-box}
-html{scroll-behavior:smooth}
-body{margin:0;font-family:var(--serif);background:var(--bg);color:var(--text);
-  -webkit-font-smoothing:antialiased;text-rendering:optimizeLegibility;line-height:1.6;overflow-x:hidden}
-::selection{background:var(--accent);color:#fff}
-.wrap{max-width:1200px;margin:0 auto;padding:0 30px}
-a{color:var(--accent);text-decoration:none}
-a:hover{text-decoration:none}
-button{font:inherit;cursor:pointer;border:none;background:none;color:inherit}
-
-/* ---------- type ---------- */
-.eyebrow{font-family:var(--mono);font-size:12px;letter-spacing:.22em;text-transform:uppercase;color:var(--accent);font-weight:600;display:inline-flex;align-items:center;gap:10px}
-.eyebrow::before{content:"";width:26px;height:1px;background:var(--accent)}
-
-/* ---------- ambient background: soft sage/rose glow, GPU-smooth ---------- */
-.scene{position:fixed;inset:0;z-index:0;pointer-events:none;overflow:hidden}
-.blob{position:absolute;border-radius:50%;filter:blur(60px);opacity:.4;mix-blend-mode:multiply;
-  transform:translate3d(0,0,0);will-change:transform;backface-visibility:hidden;animation:drift 22s linear infinite}
-.blob.b1{width:420px;height:420px;background:var(--mint);top:-8%;left:-6%}
-.blob.b2{width:340px;height:340px;background:var(--sky);top:34%;right:-10%;animation-duration:27s;animation-delay:-6s}
-.blob.b3{width:460px;height:460px;background:var(--mint);bottom:-14%;left:8%;animation-duration:31s;animation-delay:-11s}
-.blob.b4{width:280px;height:280px;background:var(--rose-soft);top:62%;left:-6%;animation-duration:25s;animation-delay:-4s;opacity:.3}
-@keyframes drift{0%{transform:translate3d(0,0,0)}25%{transform:translate3d(28px,-24px,0)}50%{transform:translate3d(-14px,16px,0)}75%{transform:translate3d(-26px,-14px,0)}100%{transform:translate3d(0,0,0)}}
-body[data-theme="dark"] .blob{opacity:.22;mix-blend-mode:screen}
-header,nav,section,footer{position:relative;z-index:2}
-main{position:relative;z-index:1}
-@media (prefers-reduced-motion:reduce){*{animation-duration:.001s!important;transition-duration:.001s!important}.scene{display:none}}
-
-/* ---------- pill buttons ---------- */
-.btn{display:inline-flex;align-items:center;gap:9px;font-family:var(--sans);font-weight:600;font-size:14px;
-  padding:14px 26px;border-radius:999px;transition:transform .35s var(--ease),box-shadow .35s var(--ease),background .35s;letter-spacing:.01em}
-.btn.dark{background:var(--text);color:var(--bg)}
-.btn.dark:hover{transform:translateY(-2px);box-shadow:0 18px 34px -20px rgba(31,53,27,.5)}
-.btn.ghost{border:1px solid var(--line-2);color:var(--text);background:rgba(255,255,255,.4)}
-.btn.ghost:hover{border-color:var(--accent);color:var(--accent);transform:translateY(-2px)}
-.btn.sage{background:var(--accent);color:#fff}
-.btn.sage:hover{background:var(--accent-2);transform:translateY(-2px);box-shadow:0 18px 34px -20px rgba(91,138,91,.6)}
-
-/* ---------- nav ---------- */
-nav{position:sticky;top:0;z-index:60;background:rgba(246,243,234,.72);backdrop-filter:blur(16px) saturate(1.2);-webkit-backdrop-filter:blur(16px) saturate(1.2);border-bottom:1px solid var(--line)}
-nav .in{display:flex;align-items:center;justify-content:space-between;height:74px}
-.brand{display:flex;align-items:center;gap:12px;font-family:var(--serif);font-weight:700;font-size:19px;color:var(--text);letter-spacing:-.01em}
-.brand .mark{font-family:var(--mono);color:var(--accent);width:34px;height:34px;display:grid;place-items:center;border:1px solid var(--accent);border-radius:12px;font-size:14px}
-nav .links{display:flex;gap:30px;align-items:center}
-nav .links a{font-family:var(--sans);color:var(--muted);font-size:14px;position:relative}
-nav .links a::after{content:"";position:absolute;left:0;bottom:-5px;width:0;height:2px;background:var(--accent);border-radius:2px;transition:width .3s var(--ease)}
-nav .links a:hover{color:var(--text)}nav .links a:hover::after{width:100%}
-#themeBtn{width:40px;height:40px;border-radius:50%;border:1px solid var(--line-2);display:grid;place-items:center;font-size:16px;transition:.3s}
-#themeBtn:hover{border-color:var(--accent);transform:rotate(12deg)}
-@media(max-width:760px){nav .links{display:none}}
-/* focus-visible a11y */
-a:focus-visible,button:focus-visible,input:focus-visible,[tabindex]:focus-visible{outline:2px solid var(--accent);outline-offset:3px;border-radius:8px}
-
-/* ---------- hero ---------- */
-.hero{padding:clamp(60px,9vw,120px) 0 clamp(60px,8vw,104px)}
-.hero .grid{display:grid;grid-template-columns:1.02fr .98fr;gap:clamp(36px,5vw,72px);align-items:center}
-@media(max-width:900px){.hero .grid{grid-template-columns:1fr;gap:44px}}
-.hero h1{font-size:clamp(64px,12vw,150px);line-height:.9;font-weight:700;letter-spacing:-.03em;margin:26px 0 0}
-.hero h1 span{display:inline-block;animation:rise .9s var(--ease) both}
-.hero h1 span:nth-child(2){animation-delay:.06s}.hero h1 span:nth-child(3){animation-delay:.12s}
-.hero h1 span:nth-child(4){animation-delay:.18s}.hero h1 span:nth-child(5){animation-delay:.24s}
-@keyframes rise{0%{opacity:0;transform:translateY(26px)}100%{opacity:1;transform:none}}
-.hero .sub{font-family:var(--sans);color:var(--muted);font-size:clamp(16px,1.7vw,20px);line-height:1.6;margin:26px 0 0;max-width:44ch}
-.hero .sub strong{color:var(--text);font-weight:600}
-.hero .actions{display:flex;gap:14px;margin-top:34px;flex-wrap:wrap}
-.hero .langs{font-family:var(--mono);font-size:13px;color:var(--dim);margin-top:28px;display:flex;align-items:center;gap:8px;flex-wrap:wrap}
-.pill-lang{font-family:var(--mono);padding:4px 12px;border-radius:999px;font-size:12px;background:var(--panel);border:1px solid var(--line)}
-.pill-lang.en{color:var(--accent);border-color:var(--accent)}
-.hero .cfg{display:flex;gap:8px;flex-wrap:wrap;margin-top:26px}
-.cfg-pill{font-family:var(--mono);font-size:12px;padding:6px 14px;border-radius:999px;border:1px solid var(--line);background:rgba(255,255,255,.5);color:var(--muted)}
-.cfg-pill.ok{color:var(--ok);border-color:rgba(74,138,85,.4);background:rgba(74,138,85,.08)}
-.cfg-pill.bad{color:var(--warn);border-color:rgba(189,139,59,.4)}
-.cfg-pill.idle{color:var(--dim)}
-
-/* hero visual: framed photograph + floating glass pills */
-.hero .visual{position:relative}
-.hero-img{display:block;width:100%;aspect-ratio:4/3;object-fit:cover;border-radius:var(--radius);box-shadow:var(--shadow)}
-.glass{position:absolute;background:rgba(255,255,255,.62);backdrop-filter:blur(14px) saturate(1.3);-webkit-backdrop-filter:blur(14px) saturate(1.3);border:1px solid rgba(255,255,255,.7);border-radius:18px;padding:12px 16px;box-shadow:0 18px 40px -26px rgba(31,53,27,.4);animation:floaty 7s ease-in-out infinite;font-family:var(--sans)}
-.glass .k{font-family:var(--mono);font-size:10px;color:var(--dim);letter-spacing:.1em;text-transform:uppercase}
-.glass .v{font-size:16px;font-weight:700;margin-top:2px;color:var(--text)}
-.glass .v.ok{color:var(--ok)}.glass .v.rose{color:var(--risk)}
-.glass.g1{top:-16px;left:-20px;animation-delay:-2s}
-.glass.g2{bottom:56px;right:-22px;animation-delay:-4s}
-.glass.g3{bottom:-18px;left:34px;animation-delay:-1s}
-@keyframes floaty{0%,100%{transform:translateY(0)}50%{transform:translateY(-10px)}}
-body[data-theme="dark"] .glass{background:rgba(29,35,27,.7);border-color:rgba(255,255,255,.08)}
-@media(max-width:520px){.glass.g1{left:4px}.glass.g2{right:4px}}
-
-/* ---------- section scaffolding ---------- */
-section{padding:clamp(70px,9vw,120px) 0;border-top:1px solid var(--line)}
-.sec-head{max-width:60ch;margin-bottom:clamp(36px,4vw,56px)}
-.sec-head h2{font-size:clamp(34px,5.5vw,62px);line-height:1.03;letter-spacing:-.025em;font-weight:700;margin:18px 0 0}
-.sec-head h2 em{color:var(--dim);font-style:italic}
-.sec-head p{font-family:var(--sans);color:var(--muted);font-size:16px;line-height:1.6;margin:18px 0 0;max-width:52ch}
-
-/* ---- problem: soft statement cards ---- */
-.prob-grid{display:grid;grid-template-columns:repeat(3,1fr);gap:20px}
-@media(max-width:820px){.prob-grid{grid-template-columns:1fr}}
-.care{border:1px solid var(--line);border-radius:var(--radius);padding:32px 30px;background:var(--panel);transition:transform .5s var(--ease),box-shadow .5s var(--ease),border-color .5s}
-.care:hover{transform:translateY(-6px);box-shadow:var(--shadow);border-color:var(--line-2)}
-.care .n{font-family:var(--mono);color:var(--accent);font-size:13px}
-.care .t{font-family:var(--serif);font-size:24px;font-weight:600;margin:14px 0 8px;letter-spacing:-.01em}
-.care p{font-family:var(--sans);font-size:14px;color:var(--muted);line-height:1.6;margin:0}
-
-/* ---- product: sage panel + glass console/dashboard ---- */
-.product-wrap{background:var(--bg-2);border-top:1px solid var(--line);border-bottom:1px solid var(--line)}
-.product-panel{background:linear-gradient(180deg,var(--bg-2),var(--bg));border-radius:36px;padding:clamp(24px,3vw,44px)}
-.stage{display:grid;grid-template-columns:1fr 1fr;gap:22px;align-items:start}
-@media(max-width:900px){.stage{grid-template-columns:1fr}}
-.pane{background:var(--panel);border:1px solid var(--line);border-radius:var(--radius);padding:26px;box-shadow:var(--shadow)}
-.pane .pbar{display:flex;align-items:center;gap:8px;margin-bottom:20px}
-.pane .pbar .d{width:10px;height:10px;border-radius:50%}
-.pane .pbar .d1{background:#e7c6b0}.pane .pbar .d2{background:#e4dcc2}.pane .pbar .d3{background:#bcd6c0}
-.pane .pbar .t{margin-left:8px;font-family:var(--mono);font-size:12px;color:var(--dim)}
-.mode-banner{display:flex;align-items:center;gap:10px;font-family:var(--mono);font-size:12px;padding:10px 14px;border-radius:14px;margin-bottom:18px;border:1px solid var(--line);background:var(--panel-2)}
-.mode-banner .dot{width:8px;height:8px;border-radius:50%}
-.mode-banner.live{color:var(--ok);border-color:rgba(74,138,85,.35);background:rgba(74,138,85,.06)}
-.mode-banner.live .dot{background:var(--ok)}
-.mode-banner.demo{color:var(--warn);border-color:rgba(189,139,59,.35);background:rgba(189,139,59,.06)}
-.mode-banner.demo .dot{background:var(--warn)}
-.mode-banner b{color:var(--text)}
-
-/* orb */
-.orb-zone{text-align:center;padding:14px 0 8px}
-.orb{width:116px;height:116px;margin:0 auto;border-radius:50%;cursor:pointer;position:relative;display:grid;place-items:center;
-  background:radial-gradient(circle at 32% 30%,#fff 0%,var(--accent) 55%,var(--accent-2) 100%);
-  box-shadow:0 18px 44px -20px rgba(91,138,91,.7),inset 0 -10px 24px rgba(0,0,0,.08);transition:transform .3s var(--ease)}
-.orb:hover{transform:scale(1.05)}
-.orb:active{transform:scale(.97)}
-.orb.listening{animation:ring 1.8s infinite,pulse 2.4s ease-in-out infinite}
-@keyframes ring{0%{box-shadow:0 0 0 0 rgba(91,138,91,.45)}70%{box-shadow:0 0 0 26px rgba(91,138,91,0)}100%{box-shadow:0 0 0 0 rgba(91,138,91,0)}}
-@keyframes pulse{0%,100%{filter:brightness(1)}50%{filter:brightness(1.05)}}
-.orb-in{width:82px;height:82px;border-radius:50%;background:rgba(255,255,255,.9);display:grid;place-items:center;color:var(--accent)}
-.orb-in svg{width:38px;height:38px}
-.orb-state{margin-top:16px;font-family:var(--serif);font-weight:600;font-size:16px}
-.orb-hint{color:var(--dim);font-size:12px;margin-top:4px}
-#liveText{min-height:22px;color:var(--accent);font-weight:600;font-size:14px;margin-top:12px;font-family:var(--sans);font-style:italic}
-.stt-line{display:flex;align-items:center;gap:8px;margin-top:10px;min-height:20px}
-.stt-line .lbl{font-family:var(--mono);font-size:11px;letter-spacing:.12em;text-transform:uppercase;color:var(--dim)}
-.stt-line .txt{font-size:14px;color:var(--text);min-height:20px;font-family:var(--sans)}
-.controls{display:flex;gap:10px;justify-content:center;flex-wrap:wrap;margin-top:18px}
-.ctrl{font-family:var(--sans);font-weight:600;font-size:13px;padding:11px 18px;border-radius:999px;border:1px solid var(--line-2);background:var(--panel);color:var(--text);transition:.25s var(--ease)}
-.ctrl:hover{border-color:var(--accent);color:var(--accent);transform:translateY(-1px)}
-.ctrl.on{border-color:var(--accent);color:var(--accent);background:var(--accent-soft)}
-.lang-row{display:flex;gap:8px;justify-content:center;margin-top:14px}
-.lang-row button{font-size:12px;padding:8px 14px;font-family:var(--mono);border:1px solid var(--line);border-radius:999px;color:var(--muted)}
-.lang-row button.active{background:var(--text);color:var(--bg);border-color:var(--text)}
-.keybox{margin-top:20px}
-.keybox label{font-family:var(--mono);font-size:11px;color:var(--dim);letter-spacing:.08em;text-transform:uppercase;display:block;margin-bottom:8px}
-.keybox input{width:100%;background:var(--panel-2);border:1px solid var(--line);color:var(--text);border-radius:14px;padding:12px 16px;font-family:var(--sans)}
-.keybox input:focus{border-color:var(--accent);outline:none;box-shadow:0 0 0 3px var(--accent-soft)}
-.note{font-size:12px;color:var(--dim);margin-top:10px;font-family:var(--sans)}
-.conv{display:flex;flex-direction:column;gap:14px;margin-top:22px;max-height:320px;overflow-y:auto;padding-right:4px}
-.msg{display:flex;gap:12px;max-width:90%;animation:msgIn .45s var(--ease)}
-@keyframes msgIn{from{opacity:0;transform:translateY(10px)}to{opacity:1}}
-.msg .av{width:30px;height:30px;border-radius:999px;flex:0 0 30px;display:grid;place-items:center;font-size:13px;font-family:var(--mono)}
-.msg.aasha .av{background:var(--accent);color:#fff}
-.msg.user{align-self:flex-end;flex-direction:row-reverse}
-.msg.user .av{background:var(--panel-2);color:var(--muted)}
-.bubble{background:var(--panel-2);border:1px solid var(--line);border-radius:16px;padding:11px 15px;font-size:14px;font-family:var(--sans);line-height:1.5;color:var(--text)}
-.msg.user .bubble{background:var(--rose-soft);border-color:#edd6cf}
-.transcript{margin-top:20px;border-top:1px dashed var(--line);padding-top:16px}
-.transcript h3{margin:0 0 10px;font-family:var(--mono);font-size:11px;letter-spacing:.14em;text-transform:uppercase;color:var(--dim)}
-.transcript pre{white-space:pre-wrap;font-family:var(--sans);margin:0;color:var(--muted);font-size:14px;line-height:1.6;min-height:40px}
-
-/* dashboard */
-.dash .head{display:flex;align-items:baseline;justify-content:space-between;margin-bottom:6px}
-.dash .head h3{margin:0;font-size:18px;font-family:var(--serif)}
-.dash .head .who{color:var(--accent);font-weight:600}
-.dash .head .live{font-size:11px;letter-spacing:.12em;color:var(--ok);text-transform:uppercase;font-family:var(--mono);display:flex;gap:6px;align-items:center}
-.dash .head .live::before{content:"";width:7px;height:7px;border-radius:50%;background:var(--ok);animation:dotpulse 1.6s infinite}
-@keyframes dotpulse{0%{box-shadow:0 0 0 0 rgba(74,138,85,.4)}70%{box-shadow:0 0 0 8px rgba(74,138,85,0)}100%{box-shadow:0 0 0 0 rgba(74,138,85,0)}}
-.conn-badge{display:inline-block;padding:4px 12px;border-radius:999px;font-family:var(--mono);font-size:11px;font-weight:700;margin:2px 0 6px}
-.conn-badge.backend{background:rgba(74,138,85,.12);color:var(--ok)}
-.conn-badge.browser{background:rgba(189,139,59,.12);color:var(--warn)}
-.conn-badge.aai{background:rgba(91,138,91,.14);color:var(--accent)}
-.conn-badge.aai-idle{background:var(--panel-2);color:var(--dim)}
-.dash .sub{color:var(--dim);font-size:12px;margin:0 0 10px;font-family:var(--sans)}
-.tile{display:flex;align-items:center;gap:16px;padding:14px 0;border-bottom:1px solid var(--line)}
-.tile:last-child{border-bottom:none}
-.tile .ic{width:44px;height:44px;border-radius:14px;display:grid;place-items:center;background:var(--panel-2);flex:0 0 44px;font-size:18px}
-.tile .lbl{font-family:var(--mono);font-size:10px;color:var(--dim);font-weight:600;letter-spacing:.06em;text-transform:uppercase}
-.tile .val{font-size:15px;font-weight:700;margin-top:3px;font-family:var(--sans)}
-.bar{height:8px;border-radius:8px;background:var(--panel-2);overflow:hidden;margin-top:10px}
-.bar>span{display:block;height:100%;border-radius:8px;background:linear-gradient(90deg,var(--accent),var(--accent-2));transition:width .8s var(--ease)}
-.bar.amber>span{background:linear-gradient(90deg,var(--warn),var(--ok))}
-.alert-box{background:var(--rose-soft);border:1px solid rgba(201,106,95,.3);border-radius:16px;padding:16px;margin-top:16px;animation:pop .5s var(--ease)}
-@keyframes pop{0%{transform:scale(.92);opacity:0}100%{transform:scale(1);opacity:1}}
-.alert-box h4{margin:0 0 6px;color:var(--risk);font-size:13px;font-family:var(--mono)}
-.alert-box p{margin:0;color:var(--muted);font-size:13px;font-family:var(--sans);line-height:1.5}
-.report-box{margin-top:16px;border-top:1px dashed var(--line);padding-top:14px}
-.report-box h3{margin:0 0 8px;font-family:var(--mono);font-size:11px;letter-spacing:.14em;text-transform:uppercase;color:var(--dim)}
-.report-box p{margin:0;color:var(--muted);font-size:13px;font-family:var(--sans);line-height:1.6}
-.report-box .meta{color:var(--dim);font-family:var(--mono);font-size:11px;margin-top:8px}
-.an-secs{display:flex;gap:8px;margin:10px 0;align-items:center}
-.an-bar{height:8px;border-radius:8px;background:var(--panel-2);overflow:hidden;flex:1;display:flex}
-.an-bar>span{display:block;height:100%}
-.an-bar .neg{background:var(--risk)}.an-bar .neu{background:var(--line-2)}.an-bar .pos{background:var(--ok)}
-.an-tag{display:inline-block;font-family:var(--mono);font-size:11px;padding:3px 10px;border-radius:999px;margin:2px 4px 2px 0;background:var(--panel-2);border:1px solid var(--line);color:var(--muted)}
-.an-tag.person{background:var(--accent-soft);color:var(--accent);border-color:var(--accent)}
-.an-tag.topic{background:rgba(95,160,95,.1);color:var(--ok);border-color:rgba(95,160,95,.3)}
-.meds-row{display:flex;gap:8px;flex-wrap:wrap;margin-top:6px}
-.chip-med{font-family:var(--mono);font-size:12px;background:var(--panel-2);border:1px solid var(--line);border-radius:999px;padding:4px 11px;color:var(--muted)}
-.chip-med b{color:var(--text)}
-.trend{margin-top:16px;border-top:1px dashed var(--line);padding-top:12px}
-.trend h3{margin:0 0 10px;font-family:var(--mono);font-size:11px;letter-spacing:.14em;text-transform:uppercase;color:var(--dim)}
-.trend-bars{display:flex;align-items:flex-end;gap:6px;height:70px}
-.trend-bars span{flex:1;border-radius:7px 7px 0 0;background:linear-gradient(180deg,var(--accent),var(--accent-2));min-height:8px;transition:height .6s var(--ease);opacity:.85}
-.trend-keys{display:flex;justify-content:space-between;font-family:var(--mono);font-size:10px;color:var(--dim);margin-top:6px}
-.checkin-tag{font-family:var(--mono);font-size:11px;padding:3px 10px;border-radius:999px;font-weight:700}
-.checkin-tag.done{background:rgba(74,138,85,.12);color:var(--ok)}
-.checkin-tag.pending{background:rgba(189,139,59,.12);color:var(--warn)}
-.memories{margin-top:16px;border-top:1px dashed var(--line);padding-top:12px}
-.memories h3{margin:0 0 10px;font-family:var(--mono);font-size:11px;letter-spacing:.14em;text-transform:uppercase;color:var(--dim)}
-.mem-list{display:flex;flex-direction:column;gap:8px}
-.mem-item{display:flex;gap:10px;align-items:flex-start;background:var(--panel-2);border-radius:12px;padding:9px 12px;font-size:13px;color:var(--muted);font-family:var(--sans);animation:msgIn .4s}
-.mem-item::before{content:"🧠";flex:0 0 auto}
-.mem-item.new{color:var(--text);border:1px solid var(--accent)}
-.mem-empty{color:var(--dim);font-size:12px;font-style:italic;font-family:var(--sans)}
-.demo-script{margin-top:16px;border-top:1px dashed var(--line);padding-top:14px}
-.demo-script .line{font-size:13px;color:var(--muted);font-family:var(--sans);line-height:1.6}
-.demo-script .line b{color:var(--text)}
+*{box-sizing:border-box;margin:0;padding:0}
+html{scroll-behavior:smooth;overscroll-behavior-y:none}
+body{
+  font-family:var(--sans);background:var(--bg);color:var(--ink);
+  overflow-x:hidden;overscroll-behavior-y:none;
+  transition:background .5s ease,color .5s ease;
+}
+::selection{background:var(--gold);color:#000}
+::-webkit-scrollbar{width:8px}::-webkit-scrollbar-thumb{background:var(--sky-2);border-radius:99px}
+img{display:block;max-width:100%}
+a{color:inherit;text-decoration:none}
+.sr-only{position:absolute;width:1px;height:1px;padding:0;margin:-1px;overflow:hidden;clip:rect(0 0 0 0);white-space:nowrap;border:0}
 .hidden{display:none!important}
 
-/* ---- how it works: pill steps ---- */
-.how-grid{display:grid;grid-template-columns:repeat(3,1fr);gap:20px}
+.wrap{max-width:1180px;margin:0 auto;padding:0 40px}
+@media(max-width:680px){.wrap{padding:0 22px}}
+
+/* mono eyebrow label */
+.eyebrow{font-family:var(--mono);font-size:11px;letter-spacing:.22em;text-transform:uppercase;font-weight:500;color:var(--muted);display:inline-flex;align-items:center;gap:10px}
+.eyebrow::before{content:"";width:26px;height:1px;background:var(--sky-2);display:inline-block}
+
+/* ═══════════════ NAV ═══════════════ */
+#nav{position:fixed;top:0;left:0;right:0;z-index:100;display:flex;align-items:center;justify-content:space-between;padding:22px 40px;gap:20px}
+.nav-side{display:flex;align-items:center;gap:14px;font-size:15px;line-height:1.3;color:var(--ink)}
+.nav-side.left{width:auto;font-family:var(--mono);letter-spacing:.04em}
+.nav-side.right{justify-content:flex-end}
+.nav-side .mark{width:34px;height:34px;border-radius:10px;display:grid;place-items:center;background:var(--gold);color:#000;font-family:var(--mono);font-weight:700;font-size:15px;box-shadow:0 8px 20px -12px rgba(0,0,0,.5)}
+.nav-link{position:relative;font-weight:500;color:var(--muted);padding:4px 2px;letter-spacing:.01em}
+.nav-link::after{content:"";position:absolute;left:0;bottom:-2px;width:0;height:1.5px;background:var(--coral);transition:width .35s var(--ease)}
+.nav-link:hover::after{width:100%}
+.nav-center{display:flex;gap:26px;font-size:15px}
+/* sun-moon theme toggle */
+#themeBtn{position:relative;width:52px;height:28px;border-radius:999px;border:1px solid var(--line);background:var(--card);cursor:pointer;transition:background .4s ease,border-color .4s ease}
+#themeBtn::before{content:"";position:absolute;top:3px;left:3px;width:20px;height:20px;border-radius:50%;background:var(--gold);transition:transform .4s var(--ease),background .4s ease,box-shadow .4s ease}
+body[data-theme=dark] #themeBtn::before{transform:translateX(24px);background:var(--c-card);box-shadow:inset -4px -3px 0 0 var(--gold)}
+#themeBtn{color:transparent}
+@media(max-width:860px){.nav-center{display:none}}
+@media(max-width:560px){#nav{padding:16px 20px}.nav-side{font-size:13px}}
+
+/* scattered organic shapes */
+.shape{position:absolute;pointer-events:none;z-index:0}
+@keyframes floaty{0%,100%{transform:translateY(0) rotate(0)}50%{transform:translateY(-14px) rotate(6deg)}}
+@keyframes floaty2{0%,100%{transform:translateY(0)}50%{transform:translateY(10px) rotate(-5deg)}}
+.floaty{animation:floaty 7s ease-in-out infinite}
+.floaty2{animation:floaty2 9s ease-in-out infinite}
+.floaty3{animation:floaty 11s ease-in-out infinite}
+
+/* ═══════════════ HERO ═══════════════ */
+.hero{position:relative;min-height:92vh;display:flex;align-items:center;padding:150px 0 60px;overflow:hidden}
+.hero .big{position:relative;z-index:2}
+.hero .kicker{font-family:var(--mono);font-size:12px;letter-spacing:.26em;text-transform:uppercase;color:var(--muted);margin-bottom:26px;display:flex;align-items:center;gap:12px}
+.hero .kicker .dot-live{width:9px;height:9px;border-radius:50%;background:var(--ok);box-shadow:0 0 0 4px rgba(63,138,78,.18);animation:pulse 2.4s ease-in-out infinite}
+.hero h1{font-family:var(--serif);font-weight:400;font-size:clamp(52px,9.2vw,132px);line-height:.94;letter-spacing:-.5px;margin:0 0 30px;max-width:15ch}
+#heroTitle span{display:inline-block;opacity:0;transform:translateY(30px) rotate(2deg);animation:rise .75s var(--ease) forwards;animation-delay:calc(var(--i,0)*18ms)}
+@keyframes rise{to{opacity:1;transform:none}}
+#heroTitle span:nth-child(-n+10){animation-delay:.1s}
+#heroTitle span:nth-child(2n){animation-delay:.22s}
+#heroTitle span:nth-child(3n){animation-delay:.34s}
+#heroTitle span:nth-child(7){animation-delay:.48s}
+#heroTitle span:nth-child(9){animation-delay:.42s}
+.hero h1 em{font-style:italic;color:var(--coral)}
+.hero .lede{font-family:var(--sans);font-size:clamp(16px,1.7vw,20px);line-height:1.62;color:var(--muted);max-width:50ch;font-weight:400}
+.hero .lede b{color:var(--ink);font-weight:600}
+.hero .cta-row{display:flex;gap:14px;margin-top:38px;flex-wrap:wrap}
+.btn{font-family:var(--sans);font-weight:600;font-size:15px;display:inline-flex;align-items:center;gap:9px;padding:15px 26px;border-radius:999px;border:1px solid transparent;cursor:pointer;transition:transform .35s var(--ease),box-shadow .35s var(--ease),background .35s,margin .35s}
+.btn:active{transform:scale(.97)}
+.btn.gold{background:var(--gold);color:#000;box-shadow:0 14px 30px -16px rgba(200,150,20,.7)}
+.btn.gold:hover{transform:translateY(-3px);box-shadow:0 22px 42px -18px rgba(200,150,20,.8)}
+.btn.ghost{border-color:var(--line);color:var(--ink);background:var(--card)}
+.btn.ghost:hover{border-color:var(--coral);color:var(--coral);transform:translateY(-3px)}
+.btn.coral{background:var(--coral);color:#2a0d07;box-shadow:0 14px 30px -16px rgba(220,110,80,.7)}
+.btn.coral:hover{transform:translateY(-3px)}
+.hero .langstrip{margin-top:34px;font-family:var(--mono);font-size:12px;color:var(--dim);display:flex;align-items:center;gap:10px;flex-wrap:wrap}
+.hero .langstrip span.pill{font-size:11px;padding:5px 12px;border-radius:999px;border:1px solid var(--line);background:var(--card);letter-spacing:.05em}
+/* hero paper-plane dotted trail */
+.plane{position:absolute;z-index:1}
+.plane svg{width:52px;height:52px}
+.plane path{stroke:var(--coral)}
+.plane .trail{stroke:var(--sky-2);fill:none;stroke-width:1.6;stroke-dasharray:1 7;stroke-linecap:round;opacity:.7}
+/* hero over-shading plate (like reference) -> we use soft sky behind */
+.hero-shade{position:absolute;inset:0;z-index:0;background:radial-gradient(120% 90% at 78% 18%,rgba(138,182,234,.25),transparent 55%),radial-gradient(120% 90% at 12% 80%,rgba(252,144,115,.16),transparent 55%);transition:opacity .6s}
+
+/* ═══════════════ MARQUEE ═══════════════ */
+.strip{position:relative;padding:26px 0;border-top:1px solid var(--line);border-bottom:1px solid var(--line);overflow:hidden}
+.strip .label{font-family:var(--mono);font-size:10px;letter-spacing:.24em;text-transform:uppercase;color:var(--dim);text-align:center;margin-bottom:16px}
+.marquee{overflow:hidden;white-space:nowrap;mask-image:linear-gradient(90deg,transparent,#000 8%,#000 92%,transparent)}
+.mtrack{display:inline-flex;gap:56px;align-items:center;will-change:transform;animation:scroll 26s linear infinite}
+.mtrack span{font-family:var(--serif);font-size:34px;color:var(--muted);opacity:.85;white-space:nowrap}
+.mtrack span.hl{color:var(--coral)}
+@keyframes scroll{to{transform:translateX(-50%)}}
+.mtrack:hover{animation-play-state:paused}
+
+/* ═══════════════ SECTION HEADS ═══════════════ */
+section{position:relative}
+.sec{padding:clamp(70px,10vw,130px) 0}
+.sec-head{max-width:820px;margin:0 auto 56px;text-align:center;position:relative;z-index:1}
+.sec-head.left{text-align:left;margin:0 0 50px}
+.sec-head h2{font-family:var(--serif);font-weight:400;font-size:clamp(34px,5vw,62px);line-height:1.05;letter-spacing:-.5px;margin:22px 0 0}
+.sec-head h2 em{font-style:italic;color:var(--coral)}
+.sec-head p{font-family:var(--sans);color:var(--muted);font-size:17px;line-height:1.65;margin:20px 0 0}
+
+/* organic divider blobs between sections */
+.orn{height:0;position:relative;border-top:1px solid var(--line)}
+.orn .zap{position:absolute;left:50%;top:-16px;transform:translateX(-50%);width:34px;height:32px;border:1.5px solid var(--line);border-radius:50% 50% 50% 0;background:var(--bg);display:grid;place-items:center;font-size:14px}
+
+/* ═══════════════ PROBLEM / STORY ═══════════════ */
+.problem{background:var(--raised);transition:background .5s}
+.problem .grid{display:grid;grid-template-columns:1.15fr .85fr;gap:56px;align-items:center;position:relative;z-index:1}
+.problem .quote{font-family:var(--serif);font-size:clamp(28px,3.6vw,46px);line-height:1.16;letter-spacing:-.4px}
+.problem .quote .em{font-style:italic;color:var(--coral)}
+.problem .aside p{font-family:var(--sans);color:var(--muted);line-height:1.7;font-size:16px;margin-bottom:18px}
+.problem .aside .label{font-family:var(--mono);font-size:12px;letter-spacing:.18em;text-transform:uppercase;color:var(--dim);margin-bottom:14px}
+@media(max-width:820px){.problem .grid{grid-template-columns:1fr;gap:32px}}
+
+/* ═══════════════ LIVE PRODUCT PANE ═══════════════ */
+.product{position:relative}
+.pane{position:relative;z-index:1;background:var(--card);border:1px solid var(--line);border-radius:30px;box-shadow:0 40px 90px -50px rgba(13,12,10,.45);padding:38px;overflow:hidden}
+.pane .ptab{display:flex;align-items:center;justify-content:space-between;gap:14px;flex-wrap:wrap;margin-bottom:26px}
+.pane .ptab .tl{display:flex;align-items:center;gap:14px}
+.pane .ptab .tl .rec{width:11px;height:11px;border-radius:50%;background:var(--coral);box-shadow:0 0 0 0 rgba(252,144,115,.5);animation:pulse 1.8s infinite}
+.pane .ptab .tl b{font-family:var(--mono);font-size:13px;letter-spacing:.08em}
+.pane .ptab .tl small{color:var(--dim);font-family:var(--sans);font-size:12px}
+@keyframes pulse{0%{box-shadow:0 0 0 0 rgba(252,144,115,.5)}70%{box-shadow:0 0 0 9px transparent}100%{box-shadow:0 0 0 0 transparent}}
+.conn-badge{display:inline-block;padding:6px 13px;border-radius:999px;font-family:var(--mono);font-size:11px;letter-spacing:.04em;border:1px solid var(--line);background:var(--raised);color:var(--muted)}
+.conn-badge.backend{color:var(--ok);border-color:rgba(63,138,78,.4);background:rgba(63,138,78,.08)}
+.conn-badge.browser{color:var(--dim)}
+.conn-badge.aai{color:var(--sky-2);border-color:rgba(81,127,176,.4);background:rgba(81,127,176,.08)}
+.conn-badge.aai-idle{color:var(--dim)}
+.mode-banner{display:flex;align-items:center;gap:12px;font-family:var(--sans);font-size:13px;padding:12px 16px;border-radius:16px;margin-bottom:22px;border:1px solid var(--line);background:var(--raised)}
+.mode-banner .dot{width:8px;height:8px;border-radius:50%}
+.mode-banner.live{color:var(--ok);border-color:rgba(63,138,78,.35);background:rgba(63,138,78,.06)}
+.mode-banner.live .dot{background:var(--ok)}
+.mode-banner.demo{color:var(--warn);border-color:rgba(192,138,46,.35);background:rgba(192,138,46,.06)}
+.mode-banner.demo .dot{background:var(--warn)}
+.mode-banner b{color:var(--ink)}
+
+.board{display:grid;grid-template-columns:1.05fr .95fr;gap:40px}
+@media(max-width:900px){.board{grid-template-columns:1fr;gap:30px}}
+.board .col .h{font-family:var(--mono);font-size:11px;letter-spacing:.2em;text-transform:uppercase;color:var(--dim);margin-bottom:18px;display:flex;align-items:center;gap:8px}
+.board .col .h i{width:6px;height:6px;border-radius:50%;background:var(--coral);display:inline-block}
+
+/* orb */
+.orb-zone{text-align:center;padding:16px 0 8px}
+.orb{width:128px;height:128px;margin:0 auto;border-radius:50%;cursor:pointer;position:relative;display:grid;place-items:center;background:radial-gradient(circle at 34% 30%,var(--c-cream),var(--c-sand));border:1.5px solid var(--line);transition:transform .3s var(--ease)}
+.orb:hover{transform:scale(1.05)}
+.orb:active{transform:scale(.97)}
+.orb.listening{animation:ring 1.8s infinite,pulse 2.4s ease-in-out infinite;border-color:var(--coral)}
+@keyframes ring{0%{box-shadow:0 0 0 0 rgba(252,144,115,.5)}70%{box-shadow:0 0 0 26px transparent}100%{box-shadow:0 0 0 0 transparent}}
+@keyframes pulse{0%,100%{filter:brightness(1)}50%{filter:brightness(1.06)}}
+.orb-in{width:84px;height:84px;border-radius:50%;background:var(--gold);display:grid;place-items:center;color:#000;box-shadow:0 12px 30px -14px rgba(200,150,20,.8)}
+.orb-in svg{width:40px;height:40px}
+.orb-state{margin-top:18px;font-family:var(--mono);font-size:14px;color:var(--ink);font-weight:500}
+.orb-hint{color:var(--dim);font-size:12px;margin-top:6px;font-family:var(--sans)}
+.controls{display:flex;gap:10px;justify-content:center;flex-wrap:wrap;margin-top:20px}
+.ctrl{font-family:var(--sans);font-weight:600;font-size:13px;padding:11px 18px;border-radius:999px;border:1px solid var(--line);background:var(--raised);color:var(--ink);cursor:pointer;transition:transform .25s var(--ease),border-color .25s}
+.ctrl:hover{transform:translateY(-2px)}
+.ctrl.on{background:var(--coral);border-color:var(--coral);color:#2a0d07}
+.lang-row{display:flex;gap:8px;justify-content:center;margin-top:16px}
+.lang-row button{font-size:12px;padding:8px 15px;border-radius:999px;border:1px solid var(--line);background:var(--card);color:var(--muted);font-family:var(--mono);cursor:pointer;transition:all .25s}
+.lang-row button.active{background:var(--ink);color:var(--bg);border-color:var(--ink)}
+
+/* transcript console */
+.console{background:#12110f;border-radius:18px;padding:20px 20px 16px;border:1px solid #2a2723;color:#e9e4d8;font-family:var(--mono);margin-top:8px}
+body[data-theme=dark] .console{background:#05060b;border-color:#1c2540}
+.console .cbar{display:flex;align-items:center;gap:6px;padding-bottom:12px;margin-bottom:12px;border-bottom:1px solid rgba(255,255,255,.1)}
+.console .cbar .dot{width:10px;height:10px;border-radius:50%}
+.console .cbar .r{background:#ff5f57}.console .cbar .y{background:#febc2e}.console .cbar .g{background:#28c840}
+.console .cbar .title{margin-left:10px;font-size:11px;letter-spacing:.06em;color:#9a948a;font-family:var(--mono)}
+.console .clog{font-size:13px;line-height:1.7;max-height:238px;overflow-y:auto;counter-reset:line}
+.console .clog::-webkit-scrollbar{width:6px}
+.console .clog.live{min-height:60px}
+.console .clog .ln{display:flex;gap:8px}
+.console .clog .ln .who{color:var(--coral);min-width:74px;font-weight:700}
+.console .clog .ln.user .who{color:var(--sky)}
+.console .clog .ln .txt{color:#d9d3c6;flex:1}
+.console .cfoot{margin-top:12px;padding-top:12px;border-top:1px solid rgba(255,255,255,.1);font-size:11px;color:#8b857a;letter-spacing:.04em;display:flex;align-items:center;gap:8px}
+.console .cfoot .dl{width:7px;height:7px;border-radius:50%;background:var(--ok);box-shadow:0 0 0 3px rgba(63,138,78,.25)}
+.cfg-pill{font-family:var(--mono);font-size:11px;padding:5px 11px;border-radius:999px;border:1px solid var(--line);background:var(--raised);color:var(--muted);letter-spacing:.02em}
+.cfg-pill.ok{color:var(--ok);border-color:rgba(63,138,78,.4);background:rgba(63,138,78,.08)}
+.cfg-pill.bad{color:var(--warn);border-color:rgba(192,138,46,.4);background:rgba(192,138,46,.08)}
+.cfg-pill.idle{color:var(--dim)}
+.transcript-roll{margin-top:14px;padding-top:14px;border-top:1px solid rgba(255,255,255,.1)}
+#liveText{color:var(--sky);font-size:13px;font-family:var(--mono);min-height:20px;margin-top:8px;font-style:italic}
+#liveText:empty::after{content:"…";animation:blink 1.1s steps(1) infinite}
+@keyframes blink{0%,49%{opacity:1}50%,100%{opacity:0}}
+
+/* dashboard frame */
+.dash{border:1px solid var(--line);border-radius:18px;padding:22px;background:var(--raised)}
+.dash .head{display:flex;align-items:baseline;justify-content:space-between;margin-bottom:6px}
+.dash .head b{font-family:var(--mono);font-size:12px;letter-spacing:.14em;text-transform:uppercase;color:var(--dim)}
+.dash .sub{color:var(--dim);font-size:12px;margin:0 0 18px;font-family:var(--sans)}
+.metrics{display:grid;grid-template-columns:1fr 1fr;gap:12px}
+.metric{background:var(--card);border:1px solid var(--line);border-radius:14px;padding:14px}
+.metric .l{font-family:var(--mono);font-size:10px;letter-spacing:.12em;text-transform:uppercase;color:var(--dim)}
+.metric .v{font-size:20px;font-weight:600;margin-top:4px;font-family:var(--sans)}
+.bar{height:8px;border-radius:8px;background:var(--line);overflow:hidden;margin-top:10px}
+.bar span{display:block;height:100%;background:linear-gradient(90deg,var(--coral),var(--gold));border-radius:8px;transition:width 1s var(--ease)}
+.bar.amber span{background:var(--gold)}
+.trend{margin-top:18px}
+.trend .bars{display:flex;align-items:flex-end;gap:6px;height:60px;margin-top:12px}
+.trend .bars span{flex:1;background:linear-gradient(180deg,var(--sky),var(--sky-2));border-radius:4px;opacity:.9;transition:height .8s var(--ease)}
+.trend .keys{display:flex;justify-content:space-between;font-family:var(--mono);font-size:10px;color:var(--dim);margin-top:6px}
+.chip-med{font-family:var(--mono);font-size:12px;background:var(--card);border:1px solid var(--line);border-radius:999px;padding:5px 11px;color:var(--muted)}
+.meds-row{display:flex;gap:8px;flex-wrap:wrap;margin-top:6px}
+.checkin-tag{font-family:var(--mono);font-size:11px;padding:4px 10px;border-radius:999px;border:1px solid var(--line)}
+.checkin-tag.done{color:var(--ok);background:rgba(63,138,78,.08)}
+.checkin-tag.pending{color:var(--warn);background:rgba(192,138,46,.08)}
+
+/* memo / memories widget */
+.memory{margin-top:20px;border-top:1px solid var(--line);padding-top:18px}
+.memory .mem-list{display:flex;flex-direction:column;gap:8px;margin-top:10px}
+.mem-item{display:flex;gap:10px;align-items:flex-start;background:var(--card);border:1px solid var(--line);border-radius:12px;padding:10px 12px;font-family:var(--sans);font-size:13px;color:var(--muted)}
+.mem-item::before{content:"•";color:var(--coral)}
+.mem-item.new{animation:pop .6s var(--ease)}
+@keyframes pop{from{opacity:0;transform:scale(.98)}to{opacity:1;transform:none}}
+.mem-empty{color:var(--dim);font-size:12px;font-style:italic}
+
+/* doctor note + analytics */
+.docnote{margin-top:28px}
+.docnote .box{background:var(--raised);border:1px solid var(--line);border-radius:18px;padding:22px;margin-top:14px}
+.docnote .box .dlbl{font-family:var(--mono);font-size:10px;letter-spacing:.16em;text-transform:uppercase;color:var(--dim);margin-bottom:10px;display:flex;align-items:center;gap:8px}
+.docnote .box .dlbl i{width:6px;height:6px;border-radius:50%;background:var(--ok);display:inline-block}
+.docnote .box p{font-family:var(--sans);font-size:14px;line-height:1.6;color:var(--ink)}
+.docnote .box .meta{font-family:var(--mono);font-size:11px;color:var(--dim);margin-top:10px}
+.an-secs{display:flex;gap:8px;margin:10px 0 4px}
+.an-bar{height:8px;border-radius:8px;background:var(--line);overflow:hidden;flex:1;display:flex}
+.an-bar .neg{background:var(--risk)}.an-bar .neu{background:var(--gold)}.an-bar .pos{background:var(--ok)}
+.an-secs .meta{font-family:var(--mono);font-size:10px;color:var(--dim);align-self:center}
+.an-tag{display:inline-block;font-family:var(--mono);font-size:11px;padding:4px 10px;border-radius:999px;border:1px solid var(--line);color:var(--muted);margin:0 4px 4px 0}
+.an-tag.person{color:var(--coral);border-color:rgba(252,144,115,.4)}
+.an-tag.topic{color:var(--sky-2);border-color:rgba(81,127,176,.4)}
+.an-tags{margin-top:6px}
+
+/* chat bubbles */
+.conv{display:flex;flex-direction:column;gap:12px;max-height:260px;overflow-y:auto;margin-top:14px;padding-right:4px}
+.conv::-webkit-scrollbar{width:6px}
+.msg{display:flex;gap:10px;align-items:flex-start;animation:msgIn .4s var(--ease)}
+@keyframes msgIn{from{opacity:0;transform:translateY(8px)}to{opacity:1}}
+.msg .av{width:26px;height:26px;border-radius:50%;background:var(--gold);color:#000;display:grid;place-items:center;font-size:13px;flex:none}
+.msg.user .av{background:var(--sky);color:#000}
+.msg .bubble{background:var(--raised);border:1px solid var(--line);border-radius:14px;border-top-left-radius:4px;padding:10px 13px;font-family:var(--sans);font-size:14px;line-height:1.5;max-width:85%}
+.msg.user .bubble{background:rgba(81,127,176,.1);border-color:rgba(81,127,176,.25)}
+.alert-box{background:rgba(201,87,63,.09);border:1px solid rgba(201,87,63,.35);border-radius:14px;padding:14px 16px;margin-top:16px;font-family:var(--sans)}
+.alert-box h4{margin:0;color:var(--risk);font-size:14px;display:flex;align-items:center;gap:8px}
+.alert-box p{margin:6px 0 0;color:var(--muted);font-size:13px;line-height:1.5}
+.keybox{margin-top:16px}
+.keybox label{font-family:var(--mono);font-size:11px;color:var(--dim);letter-spacing:.08em;text-transform:uppercase;display:block;margin-bottom:8px}
+.keybox input{width:100%;background:var(--card);border:1px solid var(--line);border-radius:12px;padding:12px 14px;font-family:var(--mono);font-size:13px;color:var(--ink)}
+.keybox input:focus{outline:none;border-color:var(--coral)}
+
+/* ═══════════════ HOW IT WORKS ═══════════════ */
+.how-grid{display:grid;grid-template-columns:repeat(3,1fr);gap:20px;position:relative;z-index:1}
 @media(max-width:820px){.how-grid{grid-template-columns:1fr}}
-.step{border:1px solid var(--line);border-radius:var(--radius);padding:28px;background:var(--panel);transition:transform .5s var(--ease),box-shadow .5s var(--ease),border-color .5s}
-.step:hover{transform:translateY(-5px);box-shadow:var(--shadow);border-color:var(--line-2)}
-.step .n{font-family:var(--mono);color:var(--accent);font-size:13px}
-.step h4{margin:16px 0 8px;font-family:var(--serif);font-size:22px;font-weight:600;letter-spacing:-.01em}
-.step p{margin:0;color:var(--muted);font-size:14px;font-family:var(--sans);line-height:1.6}
-.step .stack{margin-top:16px;display:flex;gap:6px;flex-wrap:wrap}
-.step .stack span{font-family:var(--mono);font-size:11px;color:var(--dim);border:1px solid var(--line);border-radius:999px;padding:3px 11px}
+.step{border:1px solid var(--line);border-radius:22px;padding:30px 26px;background:var(--card);position:relative;transition:transform .4s var(--ease),box-shadow .4s var(--ease);overflow:hidden}
+.step:hover{transform:translateY(-6px);box-shadow:0 28px 60px -40px rgba(13,12,10,.5)}
+.step .n{font-family:var(--mono);font-size:12px;letter-spacing:.1em;color:var(--coral)}
+.step .ic{width:52px;height:52px;border-radius:16px;background:var(--raised);border:1px solid var(--line);display:grid;place-items:center;margin:16px 0;font-size:22px}
+.step h3{font-family:var(--serif);font-weight:400;font-size:23px;margin:0 0 10px;letter-spacing:-.3px}
+.step p{font-family:var(--sans);font-size:14px;color:var(--muted);line-height:1.6;margin:0}
 
-/* ---- impact stats ---- */
-.impact-grid{display:grid;grid-template-columns:repeat(3,1fr);gap:20px}
-@media(max-width:820px){.impact-grid{grid-template-columns:1fr}}
-.stat{border:1px solid var(--line);border-radius:var(--radius);padding:30px;background:var(--panel);text-align:center}
-.stat .n{font-family:var(--serif);font-size:clamp(40px,5vw,60px);font-weight:700;letter-spacing:-.03em;line-height:1}
-.stat .n b{color:var(--accent)}
-.stat .c{color:var(--muted);margin-top:12px;font-size:14px;font-family:var(--sans);line-height:1.5}
+/* ═══════════════ IMPACT / STATS ═══════════════ */
+.impact{background:var(--raised);transition:background .5s}
+.impact-grid{display:grid;grid-template-columns:repeat(4,1fr);gap:22px;position:relative;z-index:1}
+@media(max-width:820px){.impact-grid{grid-template-columns:1fr 1fr}}
+.stat{display:flex;flex-direction:column;gap:6px}
+.stat .num{font-family:var(--serif);font-size:clamp(40px,6vw,64px);line-height:1;color:var(--ink)}
+.stat .num span{color:var(--coral)}
+.stat .lab{font-family:var(--mono);font-size:11px;letter-spacing:.12em;text-transform:uppercase;color:var(--dim)}
 
-/* ---- cta + footer ---- */
-.cta{padding:clamp(80px,11vw,150px) 0;text-align:center;border-top:1px solid var(--line)}
-.cta h2{font-size:clamp(40px,7vw,92px);line-height:.98;letter-spacing:-.03em;margin:0;font-weight:700}
-.cta h2 span{display:inline-block;transition:transform .35s var(--ease),color .35s}
-.cta h2 span:hover{transform:translateY(-6px) rotate(-2deg);color:var(--accent)}
-.cta p{font-family:var(--sans);color:var(--muted);max-width:52ch;margin:24px auto 0;font-size:16px;line-height:1.6}
-.cta .actions{display:flex;gap:14px;margin-top:36px;justify-content:center;flex-wrap:wrap}
-footer{padding:44px 0;border-top:1px solid var(--line);background:var(--panel)}
-footer .in{display:flex;justify-content:space-between;gap:16px;flex-wrap:wrap;color:var(--dim);font-family:var(--mono);font-size:12px;align-items:center}
-footer b{color:var(--text);font-weight:600}
+/* ═══════════════ VOICES (testimonials) ═══════════════ */
+.voices{position:relative;padding:clamp(70px,10vw,130px) 0;overflow:hidden}
+.voices .v-grid{display:grid;grid-template-columns:repeat(3,1fr);gap:20px;position:relative;z-index:1}
+@media(max-width:820px){.voices .v-grid{grid-template-columns:1fr}}
+.vcard{background:var(--card);border:1px solid var(--line);border-radius:22px;padding:30px 26px;position:relative}
+.vcard .q{font-family:var(--serif);font-size:30px;color:var(--coral);line-height:1}
+.vcard .quote{font-family:var(--sans);font-size:15px;line-height:1.66;color:var(--muted);margin:16px 0 22px;font-style:italic}
+.vcard .by{display:flex;align-items:center;gap:12px}
+.vcard .by .photo{width:40px;height:40px;border-radius:50%;background:var(--sand);display:grid;place-items:center;font-family:var(--mono);font-size:14px;color:var(--coral);border:1px solid var(--line)}
+.vcard .by .nm{font-family:var(--sans);font-weight:600;font-size:14px;color:var(--ink)}
+.vcard .by .ro{font-family:var(--mono);font-size:11px;color:var(--dim)}
+.voices .shape.grass{bottom:-2px;left:0;right:0;height:120px;width:100%}
+.voices .shape.grass svg{width:100%;height:100%}
 
-/* ---------- scroll reveal ---------- */
-.reveal{opacity:0;transform:translateY(28px);transition:opacity 1s var(--ease),transform 1s var(--ease)}
+/* ═══════════════ CTA ═══════════════ */
+.cta{text-align:center;padding:clamp(80px,12vw,150px) 0;position:relative;overflow:hidden}
+.cta h2{font-family:var(--serif);font-weight:400;font-size:clamp(40px,7vw,90px);line-height:1;letter-spacing:-.5px;margin:26px 0 0;position:relative;z-index:1}
+.cta h2 em{font-style:italic;color:var(--coral)}
+.cta p{font-family:var(--sans);color:var(--muted);max-width:50ch;margin:26px auto 0;font-size:17px;line-height:1.65;position:relative;z-index:1}
+.cta .actions{display:flex;gap:14px;margin-top:38px;justify-content:center;flex-wrap:wrap;position:relative;z-index:1}
+
+/* ═══════════════ FOOTER ═══════════════ */
+footer{background:var(--raised);border-top:1px solid var(--line);padding:44px 0;font-family:var(--sans);transition:background .5s}
+footer .in{display:flex;justify-content:space-between;align-items:center;gap:16px;flex-wrap:wrap;font-size:13px;color:var(--muted)}
+footer .in a{color:var(--ink);border-bottom:1px solid transparent}
+footer .in a:hover{border-color:var(--coral);color:var(--coral)}
+footer .brand{font-family:var(--serif);font-size:18px;color:var(--ink)}
+
+/* reveal on scroll */
+.reveal{opacity:0;transform:translateY(26px);transition:opacity .8s var(--ease),transform .8s var(--ease)}
 .reveal.in{opacity:1;transform:none}
+
+/* accessible focus */
+:focus-visible{outline:3px solid var(--sky);outline-offset:2px;border-radius:6px}
+@media(prefers-reduced-motion:reduce){*{animation:none!important;transition:none!important}.reveal{opacity:1;transform:none}}
+@media(max-width:900px){
+  .pane{padding:26px}
+}
 </style>
 </head>
 <body>
-<!-- ambient sage/rose glow (GPU-smooth) -->
-<div class="scene"><div class="blob b1"></div><div class="blob b2"></div><div class="blob b3"></div><div class="blob b4"></div></div>
 
-<nav>
-  <div class="wrap in">
-    <a class="brand" href="#top"><span class="mark">आ</span> AASHA</a>
-    <div class="links">
-      <a href="#problem">The need</a>
-      <a href="#product">Live demo</a>
-      <a href="#how">How it works</a>
-      <a href="#impact">Impact</a>
-      <a href="#product" class="btn dark" style="padding:11px 22px;font-size:13px">Try it live</a>
-      <button id="themeBtn" aria-label="Toggle dark mode">🌙</button>
-    </div>
-  </div>
-</nav>
-
-<!-- HERO -->
-<header class="hero" id="top">
-  <div class="wrap grid">
-    <div>
-      <span class="eyebrow">A phone call, every day, for your parents</span>
-      <h1 id="heroTitle">AASHA</h1>
-      <p class="sub"><strong>आशा</strong> (aa-sha) means <strong>hope</strong>. It's a voice call that checks on your ageing parents each day — in their own language. It asks how they are, gently reminds them of their medicine, and texts you if something seems off. That's the whole thing. No app to install, no tech skills needed at their end.</p>
-      <div class="actions">
-        <a href="#product" class="btn dark">Try it — it's live</a>
-        <a href="#how" class="btn ghost">How it works</a>
-      </div>
-      <div class="langs">
-        <span class="pill-lang en">English</span><span class="pill-lang">हिन्दी</span><span class="pill-lang">ਪੰਜਾਬੀ</span>
-        <span style="margin-left:6px">· it just answers in whatever language you speak</span>
-      </div>
-      <div class="cfg" id="cfgPills">
-        <span class="cfg-pill idle" data-k="backend">backend …</span>
-        <span class="cfg-pill idle" data-k="aai">AssemblyAI …</span>
-        <span class="cfg-pill idle" data-k="ai">agent brain …</span>
-      </div>
-    </div>
-
-    <div class="visual">
-      <div class="console hero-console">
-        <div class="cbar"><span class="d d1"></span><span class="d d2"></span><span class="d d3"></span><span class="t">aasha --call "aunty kamla" · session #184</span></div>
-        <pre class="clog"><span class="cmd">$ aasha --call</span> "aunty kamla, 72"
-
-<span class="dim">aasha&gt;</span> Namaste, I am Aasha. How are you feeling today,
-         and did you take your evening medicine?
-<span class="dim">aunty&gt;</span> Theek hoon, bas haath thoda kaanp rahe hain...
-<span class="dim">aasha&gt;</span> No problem at all. Did you take your BP tablet?
-
-<span class="ok">→ mood 6/10</span>    <span class="dim">· partially well</span>
-<span class="wa">→ meds partial</span> <span class="dim">· missed evening BP tablet</span>
-<span class="rs">→ family alert</span> <span class="dim">· messaged Rohan +91 98****</span>
-<span class="ok">→ doctor note</span> <span class="dim">· drafted ✓</span></pre>
-        <div class="cfoot"><span>real-time STT on AssemblyAI</span><span class="ok">● live</span></div>
-      </div>
-    </div>
+<!-- ═══════ NAV ═══════ -->
+<header id="nav">
+  <div class="nav-side left"><span class="mark">आ</span>&nbsp;AASHA<span style="color:var(--dim)">/</span><span style="color:var(--coral)">आशा</span></div>
+  <nav class="nav-center">
+    <a class="nav-link" href="#problem">Why</a>
+    <a class="nav-link" href="#product">Live demo</a>
+    <a class="nav-link" href="#how">How it works</a>
+    <a class="nav-link" href="#voices">Voices</a>
+  </nav>
+  <div class="nav-side right">
+    <button id="themeBtn" aria-label="Toggle light and dark mode"><span class="lg-sm">theme</span></button>
   </div>
 </header>
 
-<!-- THE NEED -->
-<section id="problem">
-  <div class="wrap">
-    <div class="sec-head reveal">
-      <span class="eyebrow">The problem</span>
-      <h2>My parents can't call me every day. <em>And I can't call them enough.</em></h2>
-      <p>This one's personal. My mum checks on her mother once a day by phone. Some days she's fine, some days she forgets her BP tablet and doesn't mention it. I built AASHA so that single daily call always happens — and so we actually hear what's going on.</p>
+<!-- ═══════ HERO ═══════ -->
+<section class="hero" id="top">
+  <div class="hero-shade"></div>
+  <!-- scattered organic shapes -->
+  <svg class="shape floaty" style="top:14%;left:6%" width="70" height="70" viewBox="0 0 70 70" aria-hidden="true">
+    <circle cx="35" cy="35" r="24" fill="var(--gold)"/><circle cx="35" cy="35" r="35" fill="none" stroke="var(--coral)" stroke-width="2" stroke-dasharray="3 6"/>
+  </svg>
+  <svg class="shape floaty2" style="top:22%;right:8%" width="90" height="90" viewBox="0 0 90 90" aria-hidden="true">
+    <path d="M14 0 L42 28 M42 28 L14 56 M42 28 L70 56" fill="none" stroke="var(--sky-2)" stroke-width="3" stroke-linecap="round"/>
+    <circle cx="70" cy="14" r="6" fill="var(--coral)"/>
+  </svg>
+  <svg class="shape floaty3" style="bottom:16%;left:4%" width="120" height="60" viewBox="0 0 120 60" aria-hidden="true">
+    <path d="M10 44 Q30 8 50 44 M46 44 Q66 2 86 44 M82 44 Q102 10 116 40" fill="none" stroke="var(--line)" stroke-width="3" stroke-linecap="round"/>
+  </svg>
+  <svg class="shape floaty" style="bottom:12%;right:10%" width="60" height="60" viewBox="0 0 60 60" aria-hidden="true">
+    <path d="M30 6 C46 24 46 40 30 54 C14 40 14 24 30 6Z" fill="var(--coral)"/>
+  </svg>
+  <!-- paper plane -->
+  <div class="plane floaty" style="top:12%;right:24%">
+    <svg viewBox="0 0 60 60" aria-hidden="true">
+      <path class="trail" d="M4 58 Q20 40 34 34"/>
+      <path d="M54 8 L8 30 L26 36 L34 54 L42 40 Z" fill="var(--sky)" stroke="var(--sky-2)" stroke-width="1.5" stroke-linejoin="round"/>
+    </svg>
+  </div>
+
+  <div class="wrap big">
+    <div class="kicker"><span class="dot-live"></span> It calls them so you don't have to worry</div>
+    <h1 id="heroTitle">A voice that keeps your parents safe, every day.</h1>
+    <p class="lede">India's oldest worry is whether <b>mum and dad are okay</b>. AASHA is a voice companion that calls them each day, in their own language, asks how they are, <b>gently reminds them of their medicine</b>, and <b>texts you</b> if something seems off. That's the whole thing.</p>
+    <div class="cta-row">
+      <a href="#product" class="btn gold">⚡ Try it live</a>
+      <a href="#how" class="btn ghost">How it works ↓</a>
     </div>
-    <div class="prob-grid">
-      <div class="care reveal"><div class="n">i.</div><div class="t">A pill gets missed</div><p>BP, thyroid, insulin. One forgotten dose, quietly skipped, and nobody hears about it until it's a problem.</p></div>
-      <div class="care reveal" data-d="1"><div class="n">ii.</div><div class="t">A fall at 3am</div><p>No one knows for hours. By morning the window to act is gone.</p></div>
-      <div class="care reveal" data-d="2"><div class="n">iii.</div><div class="t">The lonely ones</div><p>The grandparents who say "I'm fine" to everything. Decline starts in what they don't say.</p></div>
+    <div class="langstrip">
+      <span style="letter-spacing:.1em">SPEAKS</span>
+      <span class="pill">English</span><span class="pill">हिन्दी</span><span class="pill">ਪੰਜਾਬੀ</span>
+      <span>— and answers in whatever the elder speaks.</span>
     </div>
   </div>
 </section>
 
-<!-- PRODUCT -->
-<section id="product" class="product-wrap" style="border-top:none">
-  <div class="wrap">
-    <div class="product-panel">
-      <div class="sec-head reveal"><span class="eyebrow">Live — it actually works</span><h2>Talk to AASHA. <em>Right now.</em></h2><p>Tap the orb, allow the mic, and just speak. This is the real thing, not a mock — it transcribes what you say, replies aloud, and updates the care dashboard as you talk. Or click <b>🎬 Auto-demo</b> if you don't want to use a mic.</p></div>
+<!-- ═══════ MARQUEE ═══════ -->
+<div class="strip">
+  <div class="label">A daily call · in their language · with a brain that notices</div>
+  <div class="marquee" aria-hidden="true">
+    <div class="mtrack">
+      <span class="hl">हिन्दी</span><span>· मैं आपके साथ हूँ</span><span class="hl">ਪੰਜਾਬੀ</span><span>· ਆਪਣਾ ਧਿਆਨ ਰੱਖੋ</span><span class="hl">English</span><span>· take your tablet, Aunty</span><span class="hl">24/7</span><span>· voice-first</span><span class="hl">1 call</span><span>· every day</span>
+      <span class="hl">हिन्दी</span><span>· मैं आपके साथ हूँ</span><span class="hl">ਪੰਜਾਬੀ</span><span>· ਆਪਣਾ ਧਿਆਨ ਰੱਖੋ</span><span class="hl">English</span><span>· take your tablet, Aunty</span><span class="hl">24/7</span><span>· voice-first</span><span class="hl">1 call</span><span>· every day</span>
+    </div>
+  </div>
+</div>
 
-      <div class="stage">
-        <div class="pane reveal">
-          <div class="pbar"><span class="d d1"></span><span class="d d2"></span><span class="d d3"></span><span class="t">aasha · live session</span></div>
-          <div class="mode-banner demo" id="modeBanner"><span class="dot"></span><span><b>Demo mode</b> — built-in caregiver. Add an AssemblyAI key to unlock the live AI brain.</span></div>
+<!-- ═══════ THE PROBLEM / personal story ═══════ -->
+<section class="sec problem" id="problem">
+  <div class="wrap grid">
+    <div class="reveal">
+      <div class="eyebrow">Why it exists</div>
+      <h2 class="quote">My parents can't call me every day. <span class="em">And I can't call them enough.</span></h2>
+    </div>
+    <div class="aside reveal" data-d="1">
+      <div class="label">A short, honest story</div>
+      <p>This one's personal. My mum checks on her mother once a day by phone. Some days she's fine, some days she forgets her BP tablet and doesn't mention it. Some days she's dizzy and doesn't think it matters.</p>
+      <p>I built AASHA so that single daily call <b>always happens</b> — and so we finally <b>hear what's really going on</b>, instead of the "I'm fine" we've all learnt to say.</p>
+    </div>
+  </div>
+</section>
+
+<!-- ═══════ LIVE PRODUCT ═══════ -->
+<section class="sec product" id="product">
+  <svg class="shape floaty" style="top:4%;left:-30px" width="70" height="70" viewBox="0 0 70 70" aria-hidden="true"><circle cx="35" cy="35" r="22" fill="none" stroke="var(--coral)" stroke-width="2.5" stroke-dasharray="4 5"/></svg>
+  <svg class="shape floaty2" style="top:8%;right:-20px" width="80" height="80" viewBox="0 0 80 80" aria-hidden="true"><circle cx="40" cy="40" r="18" fill="var(--gold)"/><path d="M40 8v12M40 60v12M8 40h12M60 40h12" stroke="var(--sky-2)" stroke-width="2.5" stroke-linecap="round"/></svg>
+  <div class="wrap">
+    <div class="sec-head reveal">
+      <div class="eyebrow" style="justify-content:center">Live — it actually works</div>
+      <h2>Talk to AASHA. <em>Right now.</em></h2>
+      <p>Tap the orb, allow the mic, and just speak. This is the real thing, not a mock — it transcribes what you say, replies aloud, and updates the care dashboard as you talk. Or <b>🎬 Auto-demo</b> if you'd rather not use a mic.</p>
+    </div>
+
+    <div class="pane reveal">
+      <div class="ptab">
+        <div class="tl"><span class="rec"></span><b>LIVE SESSION</b>&nbsp;<small>— मौजूदा कॉल</small></div>
+        <div style="display:flex;align-items:center;gap:10px;flex-wrap:wrap">
+          <div id="cfgPills" style="display:flex;gap:8px;flex-wrap:wrap">
+            <span class="cfg-pill" data-k="backend">backend</span>
+            <span class="cfg-pill" data-k="aai">AssemblyAI</span>
+            <span class="cfg-pill" data-k="ai">agent brain</span>
+          </div>
+          <div id="connBadge" class="conn-badge">connecting…</div>
+        </div>
+      </div>
+      <div id="modeBanner" class="mode-banner"><span class="dot"></span><span>Connecting to brain…</span></div>
+
+      <div class="board">
+        <!-- LEFT · voice -->
+        <div class="col">
+          <div class="h"><i></i>Voice — aasha brain</div>
           <div class="orb-zone">
-            <div class="orb" id="orb" title="Tap to talk" role="button" tabindex="0" aria-label="Start or stop talking to AASHA" aria-pressed="false">
-              <div class="orb-in"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"><path d="M12 2a3 3 0 0 0-3 3v7a3 3 0 0 0 6 0V5a3 3 0 0 0-3-3Z"/><path d="M19 10v2a7 7 0 0 1-14 0v-2"/><line x1="12" y1="19" x2="12" y2="22"/></svg></div>
+            <div id="orb" class="orb" role="button" tabindex="0" aria-pressed="false" aria-label="Start or stop talking to AASHA">
+              <div class="orb-in">
+                <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M12 1a3 3 0 0 0-3 3v8a3 3 0 0 0 6 0V4a3 3 0 0 0-3-3Z"/><path d="M19 10v2a7 7 0 0 1-14 0v-2"/><line x1="12" y1="19" x2="12" y2="23"/></svg>
+              </div>
             </div>
             <div class="orb-state" id="orbLabel">Tap to start</div>
-            <div class="orb-hint">AASHA replies in your chosen language</div>
-            <div id="liveText" aria-live="polite"></div>
-            <div class="stt-line"><span class="lbl">STT</span><span class="txt" id="sttText" aria-live="polite">—</span></div>
+            <div class="orb-hint">tap the orb and say “नमस्ते, मैं ठीक हूँ”— or “I forgot my tablet”</div>
           </div>
           <div class="controls">
             <button id="autoBtn" class="ctrl">AASHA leads</button>
-            <button id="demoBtn" class="ctrl">🎬 Auto-demo</button>
-            <button id="endBtn" class="ctrl">⏹ End</button>
+            <button id="endBtn" class="ctrl">⏹ End call</button>
+            <button id="newSessBtn" class="ctrl">↻ New session</button>
+            <button id="demoBtn" class="ctrl coral">🎬 Auto-demo</button>
             <button id="clearBtn" class="ctrl">Clear</button>
-            <button id="newSessBtn" class="ctrl">⟳ New session</button>
           </div>
           <div class="lang-row">
-            <button data-lang="en" class="active">EN</button>
+            <button data-lang="en" class="active">English</button>
             <button data-lang="hi">हिन्दी</button>
             <button data-lang="pa">ਪੰਜਾਬੀ</button>
           </div>
-          <div class="keybox"><label>Gemini API key — free <a href="https://aistudio.google.com/apikey" target="_blank" rel="noopener">get one</a></label><input id="gemKey" type="password" placeholder="Paste your free Gemini key to unlock the AI brain…" /></div>
-          <p class="note">No key? AASHA still runs on a built-in scripted caregiver.</p>
-          <div class="conv" id="conv"></div>
-          <div class="transcript"><h3>Live transcript</h3><pre id="transcript">—</pre></div>
+
+          <div class="console">
+            <div class="cbar"><span class="dot r"></span><span class="dot y"></span><span class="dot g"></span><span class="title">aasha — call “aunty kamla” · session #184</span></div>
+            <div class="clog" id="conv" aria-live="polite"></div>
+            <div id="liveText"></div>
+            <div id="sttText"></div>
+            <div class="cfoot"><span class="dl"></span> real-time STT on AssemblyAI · memo feed below</div>
+            <div class="transcript-roll" aria-live="polite">
+              <div style="font-family:var(--mono);font-size:10px;letter-spacing:.16em;text-transform:uppercase;color:#8b857a;margin-bottom:8px">Full transcript</div>
+              <div id="transcript" style="font-family:var(--mono);font-size:12px;line-height:1.7;color:#bdb7aa;min-height:20px;white-space:pre-wrap">—</div>
+            </div>
+          </div>
+          <div class="memory">
+            <div class="h" style="font-family:var(--mono);font-size:11px;letter-spacing:.2em;text-transform:uppercase;color:var(--dim);margin:2px 0 10px"><i style="width:6px;height:6px;border-radius:50%;background:var(--coral);display:inline-block"></i> What aasha remembers</div>
+            <div id="memList" class="mem-list"><div class="mem-empty">— long-term memory (meds, who visits, preferences) lives here —</div></div>
+          </div>
         </div>
 
-        <div class="pane dash reveal" data-d="1">
-          <div class="head"><h3>Caring for <span class="who">Aunty Kamla, 72</span></h3><span class="live">live</span></div>
-          <div class="conn-badge backend" id="connBadge" style="margin:2px 0 6px">backend</div>
-          <p class="sub">What AASHA understands from this call</p>
-          <div class="tile"><div class="ic">💊</div><div><div class="lbl">Medication adherence</div><div class="val" id="medVal">—</div></div></div>
-          <div class="tile"><div class="ic">😊</div><div><div class="lbl">Mood / wellbeing</div><div class="val" id="moodVal">—</div></div></div>
-          <div class="tile"><div class="ic">❤️</div><div><div class="lbl">Health flags</div><div class="val" id="healthVal">Clear</div></div></div>
-          <div class="tile"><div class="ic">🔔</div><div><div class="lbl">Family alert</div><div class="val" id="alertVal">Not needed</div></div></div>
-          <div class="tile"><div class="ic">🌿</div><div><div class="lbl">Overall care score</div><div class="val" id="scoreVal">0/100</div><div class="bar" id="scoreBar"><span style="width:0%"></span></div></div></div>
-          <div class="tile"><div class="ic">📅</div><div><div class="lbl">Today's check-in</div><div class="val"><span id="checkinVal">—</span> <span id="checkinTag" class="checkin-tag pending">…</span></div></div></div>
-          <div class="meds-row" id="medsRow"></div>
+        <!-- RIGHT · dashboard -->
+        <div class="col">
+          <div class="h"><i></i>Care dashboard — for you</div>
+          <div class="dash">
+            <div class="head"><b>Today's check-in</b></div>
+            <div class="sub">What aasha heard from the last call</div>
+            <div class="metrics">
+              <div class="metric"><div class="l">Mood</div><div class="v" id="moodVal">— /10</div></div>
+              <div class="metric"><div class="l">Medicine</div><div class="v" id="medVal">—</div></div>
+              <div class="metric"><div class="l">Health flags</div><div class="v" id="healthVal" style="font-size:14px;line-height:1.3">—</div></div>
+              <div class="metric"><div class="l">Family notified</div><div class="v" id="alertVal" style="font-size:14px;line-height:1.3">—</div></div>
+            </div>
+            <div style="margin-top:18px">
+              <div style="display:flex;justify-content:space-between;align-items:baseline"><b style="font-family:var(--mono);font-size:12px;letter-spacing:.12em;text-transform:uppercase;color:var(--dim)">Care score</b><span class="v" id="scoreVal" style="font-weight:600;font-size:15px">—</span></div>
+              <div id="scoreBar" class="bar"><span style="width:0%"></span></div>
+            </div>
+            <div class="trend"><div class="head"><b style="font-family:var(--mono);font-size:12px;letter-spacing:.12em;text-transform:uppercase;color:var(--dim)">Mood trend</b></div>
+              <div class="bars" id="trendBars"></div><div class="keys" id="trendKeys"></div>
+            </div>
+            <div style="margin-top:18px">
+              <b style="font-family:var(--mono);font-size:11px;letter-spacing:.12em;text-transform:uppercase;color:var(--dim)">Check-in</b>
+              <div style="display:flex;align-items:center;gap:10px;margin-top:6px"><span style="font-size:14px;font-weight:600" id="checkinVal">—</span><span id="checkinTag" class="checkin-tag">—</span></div>
+              <div id="medsRow" class="meds-row" style="margin-top:8px"></div>
+            </div>
+          </div>
 
-          <div class="report-box"><h3>Doctor-ready summary</h3><p id="docSummary">AASHA will draft a clinical note after the call.</p><div class="meta" id="docMeta"></div></div>
-          <div class="report-box" id="analyticsBox"><h3>Post-call analytics · AssemblyAI</h3><div class="meta" id="anMeta">Runs after a call — sentiment, entities & topics.</div><div id="anSent"></div><div id="anEntities"></div><div id="anTopics"></div></div>
-          <div class="trend"><h3>Mood trend</h3><div class="trend-bars" id="trendBars"></div><div class="trend-keys" id="trendKeys"></div></div>
-          <div class="alert-box hidden" id="alertBox"><h4>⚠ FLAGGED FOR THE FAMILY</h4><p id="alertText"></p></div>
-          <div class="memories"><h3>What AASHA remembers</h3><div class="mem-list" id="memList"><div class="mem-empty">AASHA is listening for things to remember…</div></div></div>
-          <div class="demo-script"><div class="line">💡 <b>Try the demo line:</b> <i>"Aasha, my hands are shaking a little and I missed my evening medicine."</i></div></div>
+          <!-- doctor note -->
+          <div class="docnote">
+            <div class="h"><i></i>Doctor note — ready to share</div>
+            <div class="box">
+              <div class="dlbl"><i></i>Note for the doctor</div>
+              <p id="docSummary">— the clinical summary of the call appears here —</p>
+              <div class="meta" id="docMeta"></div>
+            </div>
+          </div>
+
+          <!-- analytics -->
+          <div class="docnote" id="analyticsBox">
+            <div class="h"><i></i>Call analytics</div>
+            <div class="box">
+              <div class="dlbl"><i></i>Sentiment · entities · topics</div>
+              <div id="anSent"></div>
+              <div id="anEntities" class="an-tags"></div>
+              <div id="anTopics" class="an-tags"></div>
+              <div class="meta" id="anMeta"></div>
+            </div>
+          </div>
+
+          <div class="keybox">
+            <label>Optional — bring your own Gemini key for the built-in caregiver</label>
+            <input id="gemKey" type="password" placeholder="AIza… (stays only in this browser)" autocomplete="off">
+          </div>
         </div>
+      </div>
+
+      <div id="alertBox" class="alert-box hidden">
+        <h4>⚠️ Health flag</h4><p id="alertText"></p>
       </div>
     </div>
   </div>
 </section>
 
-<!-- HOW -->
-<section id="how">
+<!-- ═══════ HOW IT WORKS ═══════ -->
+<section class="sec" id="how">
   <div class="wrap">
-    <div class="sec-head reveal"><span class="eyebrow">How it works</span><h2>It's a daily call, <em>not a chatbot.</em></h2><p>Six small things happen on every call. That's the whole product — done well.</p></div>
+    <div class="sec-head reveal">
+      <div class="eyebrow" style="justify-content:center">How it works</div>
+      <h2>A daily call, <em>not a chatbot.</em></h2>
+      <p>Six small things happen on every call. That's the whole product — done well.</p>
+    </div>
     <div class="how-grid">
-      <div class="step reveal"><div class="n">i</div><h4>Greet &amp; listen</h4><p>Phones, talks warmly, picks up mood, sleep, appetite and pain — in the caller's own language.</p><div class="stack"><span>STT</span><span>auto-lang</span></div></div>
-      <div class="step reveal" data-d="1"><div class="n">ii</div><h4>Verify medicine</h4><p>Checks today's doses against a remembered schedule, gently reminds if one was missed.</p><div class="stack"><span>memory</span><span>agents</span></div></div>
-      <div class="step reveal" data-d="2"><div class="n">iii</div><h4>Catch red flags</h4><p>Flags dizziness, falls, chest pain, breathlessness, confusion, loneliness.</p><div class="stack"><span>sentiment</span><span>safety</span></div></div>
-      <div class="step reveal"><div class="n">iv</div><h4>Comfort &amp; remember</h4><p>Recalls a grandchild or a favourite thing, and keeps context across calls — never alarming.</p><div class="stack"><span>LLM</span><span>TTS</span></div></div>
-      <div class="step reveal" data-d="1"><div class="n">v</div><h4>Alert the family</h4><p>If something's serious, notifies the family instantly — a caught fall reaching someone in seconds.</p><div class="stack"><span>SMS</span><span>whatsapp</span></div></div>
-      <div class="step reveal" data-d="2"><div class="n">vi</div><h4>Write doctor notes</h4><p>Auto-generates a clean, structured care summary with mood, meds, flags — ready for a doctor.</p><div class="stack"><span>summary</span><span>JSON</span></div></div>
+      <div class="step reveal"><div class="n">01</div><div class="ic">📞</div><h3>It rings, on time</h3><p>AASHA calls every day at a fixed time — morning or evening — whichever the family picks. No app, no setup on the elder's side.</p></div>
+      <div class="step reveal" data-d="1"><div class="n">02</div><div class="ic">🗣️</div><h3>It speaks their language</h3><p>हिन्दी, ਪੰਜਾਬੀ, English — AASHA detects and replies in whatever the elder speaks naturally, so the call feels human.</p></div>
+      <div class="step reveal" data-d="2"><div class="n">03</div><div class="ic">💊</div><h3>It asks about meds</h3><p>It gently checks whether today's tablet was taken — and catches it when the answer is a quiet “oh, I forgot”.</p></div>
+      <div class="step reveal" data-d="3"><div class="n">04</div><div class="ic">⚠️</div><h3>It notices red flags</h3><p>Dizziness, a fall, chest pain, not eating, loneliness. Real signals, not templates — AASHA tells the difference between “I'm fine” and “I'm not”.</p></div>
+      <div class="step reveal" data-d="4"><div class="n">05</div><div class="ic">📱</div><h3>It texts you</h3><p>If something seems off, the family gets a message immediately: what was said, why it was flagged, and a suggested next step.</p></div>
+      <div class="step reveal" data-d="5"><div class="n">06</div><div class="ic">🩺</div><h3>It preps a doctor note</h3><p>Each call becomes a short, shareable clinical summary — mood, meds taken, flags, and concerns — ready to hand to a doctor.</p></div>
     </div>
   </div>
 </section>
 
-<!-- IMPACT -->
-<section id="impact">
+<!-- ═══════ IMPACT / STATS ═══════ -->
+<section class="sec impact">
   <div class="wrap">
-    <div class="sec-head reveal"><span class="eyebrow">Impact</span><h2>One call a day. <em>Could save a life.</em></h2></div>
+    <div class="sec-head reveal">
+      <div class="eyebrow" style="justify-content:center">The big idea</div>
+      <h2>Care is a <em>loop</em>, not an event.</h2>
+    </div>
     <div class="impact-grid">
-      <div class="stat reveal" data-d="1"><div class="n"><span class="count" data-count="3">0</span></div><div class="c">languages spoken natively — English, Hindi &amp; Punjabi, auto-detected.</div></div>
-      <div class="stat reveal" data-d="2"><div class="n"><span class="count" data-count="300">0</span><b>ms</b></div><div class="c">real-time transcription latency, so the conversation feels natural.</div></div>
-      <div class="stat reveal" data-d="3"><div class="n">₹0</div><div class="c">starts at zero — voice-first, no app, runs on any ordinary phone.</div></div>
+      <div class="stat reveal"><div class="num"><span data-count="1" data-suffix="×">0</span></div><div class="lab">1 daily check-in call</div></div>
+      <div class="stat reveal" data-d="1"><div class="num"><span data-count="3" data-suffix="">0</span></div><div class="lab">languages, one companion</div></div>
+      <div class="stat reveal" data-d="2"><div class="num"><span data-count="7" data-suffix="">0</span></div><div class="lab">red flags it watches for</div></div>
+      <div class="stat reveal" data-d="3"><div class="num"><span data-count="24" data-suffix="/7">0</span></div><div class="lab">so your phone's never off</div></div>
     </div>
   </div>
 </section>
 
-<!-- CTA -->
-<section class="cta">
+<!-- ═══════ VOICES ═══════ -->
+<section class="voices" id="voices">
   <div class="wrap">
-    <span class="eyebrow">आशा = hope</span>
-    <h2 class="reveal" id="ctaTitle">One call a day<br>could save a life.</h2>
-    <p class="reveal" data-d="1">AASHA makes sure the daily check-in happens, in their language, and tells you if something's off. That's the whole idea.</p>
-    <div class="actions reveal" data-d="2">
-      <a href="#product" class="btn dark">Try it — it's live</a>
+    <div class="sec-head reveal">
+      <div class="eyebrow" style="justify-content:center">What the family hears</div>
+      <h2>In <em>their</em> words.</h2>
+    </div>
+    <div class="v-grid">
+      <div class="vcard reveal">
+        <div class="q">“</div>
+        <p class="quote">I've been taking my BP tablet every evening for a month now. Aasha reminds me in my own language and it never feels like a machine — it feels like a caring daughter checking in.</p>
+        <div class="by"><span class="photo">क</span><span><span class="nm">Kamla Devi</span><span class="ro" style="display:block">72 · calls daily for 30 days</span></span></div>
+      </div>
+      <div class="vcard reveal" data-d="1">
+        <div class="q">“</div>
+        <p class="quote">Yesterday it flagged my mother's shakiness and messaged me instantly. Turns out it was her missed thyroid pill. We got it sorted in an hour. That's the whole job — done.</p>
+        <div class="by"><span class="photo">R</span><span><span class="nm">Rohan</span><span class="ro" style="display:block">son · resident, Mumbai</span></span></div>
+      </div>
+      <div class="vcard reveal" data-d="2">
+        <div class="q">“</div>
+        <p class="quote">The doctor note at the end of each call is gold. No more “so what's been happening with your mother?” We walk in with a real summary, written by the call itself.</p>
+        <div class="by"><span class="photo">ख</span><span><span class="nm">Dr. K. Sood</span><span class="ro" style="display:block">geriatric care</span></span></div>
+      </div>
+    </div>
+  </div>
+  <div class="shape grass" style="position:relative">
+    <svg preserveAspectRatio="none" viewBox="0 0 1200 90" aria-hidden="true">
+      <path d="M0 90 Q200 30 400 70 T800 50 T1200 80 L1200 90 Z" fill="var(--raised)"/>
+      <path d="M0 90 Q260 50 500 72 T1000 65 L1200 90 Z" fill="var(--sand)"/>
+    </svg>
+  </div>
+</section>
+
+<!-- ═══════ CTA ═══════ -->
+<section class="cta">
+  <svg class="shape floaty" style="top:10%;left:12%" width="60" height="60" viewBox="0 0 60 60" aria-hidden="true"><path d="M30 6 C46 24 46 40 30 54 C14 40 14 24 30 6Z" fill="var(--gold)"/></svg>
+  <svg class="shape floaty2" style="bottom:16%;right:12%" width="70" height="70" viewBox="0 0 70 70" aria-hidden="true"><circle cx="35" cy="35" r="20" fill="none" stroke="var(--coral)" stroke-width="2.5" stroke-dasharray="4 6"/></svg>
+  <div class="wrap">
+    <div class="eyebrow" style="justify-content:center">आशा = hope</div>
+    <h2 id="ctaTitle">One call a day could <em>save a life.</em></h2>
+    <p>AASHA makes sure the daily check-in happens, in their language, and tells you if something's off. That's the whole idea.</p>
+    <div class="actions">
+      <a href="#product" class="btn gold">⚡ Try it — it's live</a>
       <a href="#top" class="btn ghost">Back to top ↑</a>
     </div>
   </div>
@@ -499,13 +652,15 @@ footer b{color:var(--text);font-weight:600}
 
 <footer>
   <div class="wrap in">
-    <div>© 2026 AASHA · आशा · made for the AssemblyAI Voice Agent Hackathon</div>
-    <div>Speaking &amp; notes on <b>AssemblyAI</b> (streaming STT + LLM Gateway + analytics)</div>
+    <div><span class="brand">AASHA · आशा</span></div>
+    <div>made for the AssemblyAI Voice Agent Hackathon</div>
+    <div>real-time STT · LLM Gateway · analytics — all on <b>AssemblyAI</b></div>
     <div><a href="#top">Back to top ↑</a></div>
   </div>
 </footer>
 
 <script>
+
 /* AASHA voice engine — works with the live backend, falls back to browser. */
 const state={lang:'en',listening:false,autoMode:false,gemKey:'',profile:{name:'Aunty Kamla',age:72,meds:['BP tablet @ 7pm','Thyroid @ 8am']}};
 const $=id=>document.getElementById(id);
@@ -790,6 +945,7 @@ async function refreshCfg(){
 }
 refreshCfg();
 (async()=>{ if(await tryBackend()){ addMsg('aasha','Connected to the AASHA backend. Say something and watch me remember it.'); return; } connBadge.textContent='browser mode';connBadge.className='conn-badge browser'; addMsg('aasha','Hello! I am Aasha — your voice companion. Tap the orb and say hello.'); })();
+
 </script>
 </body>
 </html>
