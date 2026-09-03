@@ -16,7 +16,7 @@
 <link rel="icon" type="image/svg+xml" href="assets/favicon.svg">
 <link rel="preconnect" href="https://fonts.googleapis.com">
 <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
-<link href="https://fonts.googleapis.com/css2?family=DM+Serif+Display:ital@0;1&family=Space+Grotesk:wght@300;400;500;600;700&family=JetBrains+Mono:ital,wght@0,400;0,500;0,700;1,400&display=swap" rel="stylesheet">
+<link href="https://fonts.googleapis.com/css2?family=Poppins:ital,wght@0,300;0,400;0,500;0,600;0,700;1,400;1,600&family=JetBrains+Mono:ital,wght@0,400;0,500;0,700&display=swap" rel="stylesheet">
 <style>
 /* ══════════════════════ AASHA · editorial design system ══════════════════════
    Palette + type tokens (light values here; dark values flip on [data-theme=dark]) */
@@ -33,9 +33,9 @@
   --coral: var(--c-coral);
   --muted: rgba(13,12,10,.62);
   --dim: rgba(13,12,10,.40);
-  --serif:"DM Serif Display",Georgia,"Times New Roman",serif;
-  --sans:"Space Grotesk",-apple-system,"Segoe UI",Roboto,Helvetica,Arial,sans-serif;
-  --mono:"JetBrains Mono",ui-monospace,"SF Mono",Menlo,Consolas,monospace;
+  --serif:"Poppins",-apple-system,"Segoe UI",Roboto,Helvetica,Arial,sans-serif;   /* display — cute geometric */
+  --sans:"Poppins",-apple-system,"Segoe UI",Roboto,Helvetica,Arial,sans-serif;    /* body — Product Sans-like */
+  --mono:"JetBrains Mono",ui-monospace,"SF Mono",Menlo,Consolas,monospace;        /* terminal console only */
   --ok:#3f8a4e; --warn:#c08a2e; --risk:#c9573f;
   --sky:#8ab6ea; --sky-2:#517fb0;
   --ease:cubic-bezier(.22,1,.36,1);
@@ -380,8 +380,26 @@ footer .brand{font-family:var(--serif);font-size:18px;color:var(--ink)}
 .reveal{opacity:0;transform:translateY(26px);transition:opacity .8s var(--ease),transform .8s var(--ease)}
 .reveal.in{opacity:1;transform:none}
 
-/* accessible focus */
-:focus-visible{outline:3px solid var(--sky);outline-offset:2px;border-radius:6px}
+/* ═══════ CUTE + EASY FONT OVERRIDE (Poppins, Product Sans-like) ═══════
+   Convert every technical/mono dash label into the friendly rounded
+   Product Sans style. JetBrains Mono stays ONLY on the terminal console. */
+.eyebrow,.strip .label,.dash .head b,.board .col .h,.metric .l,
+.docnote .box .dlbl,.stat .lab,.memory .h,.memory .h *,.checkin-tag,
+.chip-med,.an-tag,.conn-badge,.cfg-pill,.lang-row button,.pane .ptab .tl b,
+.orb-state,.keybox label,.vcard .by .ro{font-family:var(--sans);letter-spacing:.11em;font-weight:500}
+.eyebrow{letter-spacing:.16em;font-weight:600}
+/* make the big headings friendly and rounded-bold (not thin/serif) */
+.hero h1,.sec-head h2,.problem .quote,.cta h2,.step h3,.stat .num{font-weight:600;letter-spacing:-.02em}
+.hero h1 em,.sec-head h2 em,.cta h2 em,.problem .quote .em{font-style:italic;font-weight:600}
+/* dashboard metric values — friendly + easy to read */
+.metric .v,.dash .sub,.docnote .box .meta,.an-tag,.vcard .quote,.hero .lede{font-weight:400;letter-spacing:0}
+.orb-state{font-weight:600;letter-spacing:.02em}
+/* the small labels a touch less spaced so they read cleanly */
+.checkin-tag,.chip-med,.an-tag,.cfg-pill,.conn-badge,.lang-row button{letter-spacing:.04em}
+@media(max-width:560px){
+  .metric .v{font-size:18px}
+}
+
 @media(prefers-reduced-motion:reduce){*{animation:none!important;transition:none!important}.reveal{opacity:1;transform:none}}
 @media(max-width:900px){
   .pane{padding:26px}
@@ -602,7 +620,7 @@ footer .brand{font-family:var(--serif);font-size:18px;color:var(--ink)}
             </div>
           </div>
           <div class="memory">
-            <div class="h" style="font-family:var(--mono);font-size:11px;letter-spacing:.2em;text-transform:uppercase;color:var(--dim);margin:2px 0 10px"><i style="width:6px;height:6px;border-radius:50%;background:var(--coral);display:inline-block"></i> What aasha remembers</div>
+            <div class="h" style="font-family:var(--sans);font-size:12px;font-weight:600;letter-spacing:.14em;text-transform:uppercase;color:var(--dim);margin:2px 0 10px"><i style="width:6px;height:6px;border-radius:50%;background:var(--coral);display:inline-block"></i> What aasha remembers</div>
             <div id="memList" class="mem-list"><div class="mem-empty">— long-term memory (meds, who visits, preferences) lives here —</div></div>
           </div>
         </div>
@@ -620,14 +638,14 @@ footer .brand{font-family:var(--serif);font-size:18px;color:var(--ink)}
               <div class="metric"><div class="l">Family notified</div><div class="v" id="alertVal" style="font-size:14px;line-height:1.3">—</div></div>
             </div>
             <div style="margin-top:18px">
-              <div style="display:flex;justify-content:space-between;align-items:baseline"><b style="font-family:var(--mono);font-size:12px;letter-spacing:.12em;text-transform:uppercase;color:var(--dim)">Care score</b><span class="v" id="scoreVal" style="font-weight:600;font-size:15px">—</span></div>
+              <div style="display:flex;justify-content:space-between;align-items:baseline"><b style="font-family:var(--sans);font-size:13px;font-weight:600;letter-spacing:.1em;text-transform:uppercase;color:var(--dim)">Care score</b><span class="v" id="scoreVal" style="font-weight:600;font-size:15px">—</span></div>
               <div id="scoreBar" class="bar"><span style="width:0%"></span></div>
             </div>
-            <div class="trend"><div class="head"><b style="font-family:var(--mono);font-size:12px;letter-spacing:.12em;text-transform:uppercase;color:var(--dim)">Mood trend</b></div>
+            <div class="trend"><div class="head"><b style="font-family:var(--sans);font-size:13px;font-weight:600;letter-spacing:.1em;text-transform:uppercase;color:var(--dim)">Mood trend</b></div>
               <div class="bars" id="trendBars"></div><div class="keys" id="trendKeys"></div>
             </div>
             <div style="margin-top:18px">
-              <b style="font-family:var(--mono);font-size:11px;letter-spacing:.12em;text-transform:uppercase;color:var(--dim)">Check-in</b>
+              <b style="font-family:var(--sans);font-size:13px;font-weight:600;letter-spacing:.1em;text-transform:uppercase;color:var(--dim)">Check-in</b>
               <div style="display:flex;align-items:center;gap:10px;margin-top:6px"><span style="font-size:14px;font-weight:600" id="checkinVal">—</span><span id="checkinTag" class="checkin-tag">—</span></div>
               <div id="medsRow" class="meds-row" style="margin-top:8px"></div>
             </div>
